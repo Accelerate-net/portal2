@@ -576,28 +576,15 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
         const finalData = {};
-        const processedKeys = new Set();
-
-        // Step 1: Iterate over examSubmissionData and find corresponding time from questionTimeTracker
         for (const [questionId, data] of Object.entries(examSubmissionData)) {
             if (questionTimeTracker.hasOwnProperty(questionId)) {
                 finalData[questionId] = {
                     "ts": questionTimeTracker[questionId],
                     "a": data["a"]
                 };
-                processedKeys.add(questionId);  // Mark this key as processed
             }
         }
 
-        // Step 2: Add remaining keys from questionTimeTracker
-        for (const [questionId, timeSpent] of Object.entries(questionTimeTracker)) {
-            if (!processedKeys.has(questionId)) {
-                finalData[questionId] = {
-                    "ts": timeSpent,
-                    "a": ""
-                };
-            }
-        }
 
 
         var data = {
