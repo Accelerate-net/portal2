@@ -16,8 +16,8 @@ angular.module('attemptExamApp', ['ngCookies'])
     });
 
     function getUserToken() {
-        return "Bearer sgMhRElheLU5okMdUMXb7avSlbV8rB0GUqYrz3/HZjzce4kfKC6aObBFbBJ3Tw16y+yUMZ110w6RFTtvF3ySubvurgOrZG2dAwgDtLa7cCRN+ctxa+hXoH4MVCe81yHF";
-        //$cookies.get("vegaPilotAdminToken")
+        const urlParams = new URLSearchParams(window.location.search);
+        return decodeURIComponent(urlParams.get('user'));
     }
 
     function getExamTokenFromURL() {
