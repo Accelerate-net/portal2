@@ -569,4 +569,58 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
 
+    $scope.saveExamProgress = function() { //Note: also auto-save every 30s
+
+        var examSubmissionData = localStorage.getItem("examSubmissionData") ? JSON.parse(localStorage.getItem("examSubmissionData")) : {};
+        var timestampData = localStorage.getItem("questionTimeTracker") ? JSON.parse(localStorage.getItem("questionTimeTracker")) : {};
+
+
+        const finalData = {};
+        const processedKeys = new Set();
+
+        // Step 1: Iterate over examSubmissionData and find corresponding time from questionTimeTracker
+        for (const [questionId, data] of Object.entries(examSubmissionData)) {
+            if (questionTimeTracker.hasOwnProperty(questionId)) {
+                finalData[questionId] = {
+                    "ts": questionTimeTracker[questionId],
+                    "a": data["a"]
+                };
+                processedKeys.add(questionId);  // Mark this key as processed
+            }
+        }
+
+        // Step 2: Add remaining keys from questionTimeTracker
+        for (const [questionId, timeSpent] of Object.entries(questionTimeTracker)) {
+            if (!processedKeys.has(questionId)) {
+                finalData[questionId] = {
+                    "ts": timeSpent,
+                    "a": ""
+                };
+            }
+        }
+
+
+        var data = {
+            token : getExamTokenFromURL(),
+            data : finalData
+        }
+        $http({
+          method  : 'POST',
+          url     : 'https://crisprtech.app/crispr-apis/user/save-progress.php',
+          data    :  data,
+          headers : {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + getUserToken()
+          }
+         })
+         .then(function(response) {
+            if(response.data.status == "success"){
+                console.log('save successful');
+            } else {
+                console.log('failed to save');
+            }
+        });
+    }
+
+
 });
