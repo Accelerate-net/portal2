@@ -458,7 +458,7 @@ angular.module('attemptExamApp', ['ngCookies'])
             }
 
             //Red Timer Alerting
-            if(criprInsightsEnabled) {
+            if($scope.criprInsightsEnabled) {
                 if(hours == 0 && minutes < 2) { //less than 1 minute left
                     document.getElementById("timerContainer").classList.add("blinkingRed");
                     document.getElementById("timerContainer").classList.remove("blinkingRedStopped");
