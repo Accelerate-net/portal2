@@ -248,7 +248,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
     //Force Submite the Exam
     $scope.forceSubmitExam = function() {
-        alert('Exam has been ended')
+        $scope.saveExamProgress("TERMINATE");
     }
 
     $scope.findAlreadySubmittedAnswer = function(questionKey) {
@@ -569,7 +569,7 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
 
-    $scope.saveExamProgress = function() { //Note: also auto-save every 30s
+    $scope.saveExamProgress = function(endExamFlag) { //Note: also auto-save every 30s
 
         var examSubmissionData = localStorage.getItem("examSubmissionData") ? JSON.parse(localStorage.getItem("examSubmissionData")) : {};
         var timestampData = localStorage.getItem("questionTimeTracker") ? JSON.parse(localStorage.getItem("questionTimeTracker")) : {};
@@ -602,8 +602,10 @@ angular.module('attemptExamApp', ['ngCookies'])
 
         var data = {
             token : getExamTokenFromURL(),
-            data : finalData
+            data : finalData,
+            endExam : (endExamFlag == "TERMINATE" ? 1 : 0)
         }
+
         $http({
           method  : 'POST',
           url     : 'https://crisprtech.app/crispr-apis/user/save-progress.php',
