@@ -505,13 +505,6 @@ angular.module('attemptExamApp', ['ngCookies'])
         return result;
     }
 
-    $scope.submitExamFinal = function() {
-        var submissionData = localStorage.getItem("examSubmissionData") ? JSON.parse(localStorage.getItem("examSubmissionData")) : {};
-        var timeTrackerData = localStorage.getItem("questionTimeTracker") ? JSON.parse(localStorage.getItem("questionTimeTracker")) : {};
-        var finalSubmissionData = combineSubmissionData(submissionData, timeTrackerData);
-        console.log(JSON.stringify(finalSubmissionData));
-    }
-
     $scope.countdown = 5;
     $scope.countdownElement = document.getElementById("countdown");
     $scope.isSubmitClicked = false;
@@ -533,7 +526,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                 callback: function (result) {
                     if(result) {
                         $scope.countdownElement.textContent = "Submitting";
-                        $scope.submitExamFinal();
+                        $scope.saveExamProgress("TERMINATE");
                     } else {
                         document.getElementById("bootbox-demo-3").classList.remove("active");
                         $scope.countdownElement.textContent = "Submit Exam"
@@ -602,7 +595,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
         var data = {
             token : getExamTokenFromURL(),
-            data : finalData,
+            data : combineSubmissionData(examSubmissionData, timestampData),
             endExam : (endExamFlag == "TERMINATE" ? 1 : 0)
         }
 
