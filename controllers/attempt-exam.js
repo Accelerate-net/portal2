@@ -613,7 +613,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                 console.log('save successful');
                 if(endExamFlag == "TERMINATE") {
                     var redirectURL = "https://portal2.crisprlearning.com/report.html?attemptId=1";
-                    window.location(redirectURL);
+                    window.location.href(redirectURL);
                 }
             } else {
                 console.log('failed to save');
