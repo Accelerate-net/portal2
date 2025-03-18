@@ -185,7 +185,7 @@ angular.module('attemptExamApp', ['ngCookies'])
           data    :  data,
           headers : {
             'Content-Type': 'application/json',
-            'Authorization': getUserToken()
+            'Authorization': "Bearer " + getUserToken()
           }
          })
          .then(function(response) {
