@@ -50,9 +50,6 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.sectionDetails = Object.values(examData).map(section => section.name);
     }
 
-    $scope.loadSection2 = function(data) {
-        console.log(data)
-    }
 
     $scope.isActiveSection = function(sectionId) {
         return localStorage.getItem("currentSectionOpen") == sectionId;
@@ -612,8 +609,8 @@ angular.module('attemptExamApp', ['ngCookies'])
             if(response.data.status == "success"){
                 console.log('save successful');
                 if(endExamFlag == "TERMINATE") {
-                    var redirectURL = "https://portal2.crisprlearning.com/report.html?attemptId=1";
-                    window.location.href(redirectURL);
+                    var redirectURL = "https://candidate.crisprlearning.com/report.html?attemptId=1";
+                    window.location.href = redirectURL;
                 }
             } else {
                 console.log('failed to save');
@@ -623,7 +620,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     //Auto save every minute
-    $interval($scope.saveExamProgress(), 60000);
+    $interval($scope.saveExamProgress, 60000);
 
 
 });
