@@ -609,7 +609,7 @@ angular.module('attemptExamApp', ['ngCookies'])
             if(response.data.status == "success"){
                 console.log('save successful');
                 if(endExamFlag == "TERMINATE") {
-                    var redirectURL = "https://candidate.crisprlearning.com/report.html?attemptId=1";
+                    var redirectURL = "https://candidate.crisprlearning.com/report.html?attemptId="(response.data.data);
                     window.location.href = redirectURL;
                 }
             } else {
