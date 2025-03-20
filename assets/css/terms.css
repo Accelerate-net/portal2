@@ -1,0 +1,156 @@
+/* General Styles */
+body {
+    font-family: Geneva, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Header */
+.main-header {
+    background-color: #083e58;
+    padding: 15px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    height: 40px;
+    width: auto;
+    margin-left: 10px;
+}
+
+/* Content */
+#content {
+    padding: 60px 90px;
+}
+
+@media (max-width: 850px) {
+    #content {
+        padding: 30px 20px;
+    }
+
+    .panel-body {
+        padding: 15px !important;
+    }
+}
+
+.panel-default {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.panel-body {
+    padding: 25px;
+}
+
+.instruction-section {
+    display: none;
+}
+
+.instruction-section.active {
+    display: block;
+}
+
+h4 {
+    color: #012B55;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+ol {
+    padding-left: 20px;
+}
+
+ol li {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+hr {
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+
+label {
+    font-weight: 500;
+    display: block;
+    margin: 15px 0;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Buttons */
+.btn-proceed {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-proceed:hover {
+    background-color: #218838;
+}
+
+/* Footer */
+#copyright {
+    background-color: #012B55;
+    color: #fff;
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Icons */
+.fas {
+    margin-right: 8px;
+}
+
+/* Info Banner */
+.info-banner {
+    background-color: #fff3cd; /* Light yellow background */
+    color: #856404; /* Dark yellow text */
+    padding: 15px 15px 15px 50px; /* Add left padding for icon */
+    margin-bottom: 20px;
+    border-left: 5px solid #ffc107; /* Yellow accent border */
+    border-radius: 4px;
+    font-size: 14px;
+    position: relative; /* Required for absolute positioning of icon */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-banner i {
+    position: absolute; /* Position icon absolutely */
+    top: 20px; /* Adjust vertical position */
+    left: 15px; /* Adjust horizontal position */
+    font-size: 20px;
+    color: #ffc107; /* Yellow icon */
+}
+
+.info-banner p {
+    margin: 0; /* Remove default paragraph margin */
+}
+
+/* Checkbox Label */
+.checkbox-label {
+    display: flex;
+    align-items: flex-start; /* Align checkbox to the top */
+    gap: 10px; /* Space between checkbox and text */
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 4px; /* Adjust vertical alignment */
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}

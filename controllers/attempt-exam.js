@@ -173,8 +173,20 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     $scope.initialiseExam = function(){
+
+        let browserFingerprint = {
+            screenWidth: 1157, //screen.width,
+            screenHeight: 685, //screen.height,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language,
+            platform: navigator.platform,
+            cpuCores: navigator.hardwareConcurrency,
+            deviceMemory: navigator.deviceMemory || "unknown",
+        };
+
         var data = {
-            token : getExamTokenFromURL()
+            token : getExamTokenFromURL(),
+            fingerprint: browserFingerprint
         }
         $http({
           method  : 'POST',
@@ -590,10 +602,21 @@ angular.module('attemptExamApp', ['ngCookies'])
         }
 
 
+        let browserFingerprint = {
+            screenWidth: screen.width,
+            screenHeight: screen.height,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language,
+            platform: navigator.platform,
+            cpuCores: navigator.hardwareConcurrency,
+            deviceMemory: navigator.deviceMemory || "unknown",
+        };
+
         var data = {
             token : getExamTokenFromURL(),
             data : combineSubmissionData(examSubmissionData, timestampData),
-            endExam : (endExamFlag == "TERMINATE" ? 1 : 0)
+            endExam : (endExamFlag == "TERMINATE" ? 1 : 0),
+            fingerprint: browserFingerprint
         }
 
         $http({
