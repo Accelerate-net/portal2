@@ -630,10 +630,9 @@ angular.module('attemptExamApp', ['ngCookies'])
          })
          .then(function(response) {
             if(response.data.status == "success"){
-                console.log('save successful');
-                if(endExamFlag == "TERMINATE") {
-                    var redirectURL = "https://candidate.crisprlearning.com/report.html?attemptId="(response.data.data);
-                    window.location.href = redirectURL;
+                if(response.data.data.submitted) { //The exam got submitted
+                    var redirectURL = response.data.data.reportURL;
+                    location.replace(redirectUrl);
                 }
             } else {
                 console.log('failed to save');
