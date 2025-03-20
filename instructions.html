@@ -198,7 +198,7 @@
             $.ajax(startExamRequest).done(function (startExamResponse) {
                 if(startExamResponse.status == "success") {
                     var redirectUrl = startExamResponse.data.url;
-                    window.open(redirectUrl, "_blank");
+                    location.replace(redirectUrl);
                 } else {
                     alert(startExamResponse.message || startExamResponse.error);
                 }
