@@ -44,7 +44,8 @@
                                         <h4 class="text-center"><i class="fas fa-info-circle"></i> Please read the instructions carefully</h4>
                                         <h4><strong><u>General Instructions:</u></strong></h4>
                                         <ol>
-                                            <li>Total duration of <span id="examName1"></span> is <span id="examDuration"></span> min.</li>
+                                            <li>Total duration of <span id="examName1"></span> is <span id="examDuration"></span>.</li>
+                                            <span id="specialTerms"></span>
                                             <li>The clock will be set at the server. The countdown timer in the top right corner of the screen will display the remaining time available for you to complete the examination.</li>
                                             <li>
                                                 The Questions Palette displayed on the right side of the screen will show the status of each question using one of the following symbols:
@@ -156,6 +157,8 @@
             const customData = JSON.parse(decodeURIComponent(metadataPassed));
 
             document.getElementById("examName1").innerHTML = customData["title"];
+            document.getElementById("examDuration").innerHTML = customData["duration"] + " mins";
+            document.getElementById("specialTerms").innerHTML = customData["specialTerms"];
         }
 
         renderCustomContent();

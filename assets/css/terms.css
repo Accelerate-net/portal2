@@ -1,6 +1,6 @@
 /* General Styles */
 body {
-    font-family: Geneva, sans-serif;
+    font-family: Tahoma, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 0;
@@ -68,6 +68,17 @@ ol {
 ol li {
     margin-bottom: 15px;
     line-height: 1.6;
+}
+
+
+/* Target only nested <ol> elements */
+ol ol {
+    list-style-type: lower-alpha; /* Use a, b, c for nested lists */
+}
+
+/* Target only the first-level <ol> elements */
+ol {
+    list-style-type: decimal; /* Use 1, 2, 3 for top-level lists */
 }
 
 hr {
@@ -153,4 +164,8 @@ input[type="checkbox"] {
 .checkbox-label input[type="checkbox"] {
     margin-top: 4px; /* Adjust vertical alignment */
     flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+#examName1 {
+    font-weight: 600 !important;
 }
