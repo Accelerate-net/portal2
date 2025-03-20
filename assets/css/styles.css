@@ -21270,7 +21270,7 @@ body.error .error-wrapper h1 {
 }
 @media (max-width: 767px) {
   #topnav .navbar-brand {
-    width: 68px;
+    width: 100px;
   }
 }
 #topnav.navbar-default .navbar-brand,
