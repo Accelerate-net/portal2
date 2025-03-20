@@ -145,16 +145,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         
-        const cookiesInstructions = document.cookie;
-        function getCookieByNameForInstructions(name) {
-            var match = cookiesInstructions.match('(?:^|; )' + name + '=([^;]*)');
-            return match ? decodeURIComponent(match[1]) : null;
-        }
-
         function getUserTokenForInstructions() {
-            return "Bearer " + getCookieByNameForInstructions('crispriteUserToken');
+            const urlParams = new URLSearchParams(window.location.search);
+            return "Bearer " + decodeURIComponent(urlParams.get('token'));
         }
-
 
         function renderCustomContent() {
             const urlParams = new URLSearchParams(window.location.search);
