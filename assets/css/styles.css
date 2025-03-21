@@ -31493,6 +31493,17 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     display: none; /* Hides scrollbar */
 }
 
+.examTitleHeader {
+    margin: 16px 0 0 0;
+    font-size: 21px;
+    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-weight: bold;
+}
+
 
 @media (max-width: 991px) {
   .centerMobileButton {
