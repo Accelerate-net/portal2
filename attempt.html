@@ -59,17 +59,17 @@
 		</div>
 
         <header id="topnav" class="navbar navbar-default navbar-fixed-top" role="banner" ng-show="examDetailsFound">
-			<div class="logo-area">		
+			<div class="logo-area" ng-show="!minimumDistractions">		
 				<span class="navbar-brand" href=""></span>
 				<h1 style="margin: 14px 0 0 0; font-size: 24px;"><span style="margin-right: 10px; font-size: 80%; color: #8fa8c4;"><i class="ti ti-write"></i></span>{{examMetadata.title}}</h1>
 			</div>
 
 			<ul class="nav navbar-nav toolbar pull-right" style="padding-right: 10px;">
-		        <li class="toolbar-icon-bg hidden-xs" id="trigger-fullscreen">
+		        <li class="toolbar-icon-bg hidden-xs" id="trigger-fullscreen"> <!-- hidden-xs will hide on Mobile -->
 		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="ti ti-fullscreen"></i></span></i></a>
 		        </li>
 				
-				<li class="dropdown toolbar-icon-bg" ng-show="criprInsightsEnabled">
+				<li class="dropdown toolbar-icon-bg" ng-show="criprInsightsEnabled && !minimumDistractions">
 					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-bell"></i></span><span class="badge badge-deeporange">2</span></a>
 					<div class="dropdown-menu notifications arrow">
 						<div class="topnav-dropdown-header">
@@ -129,7 +129,7 @@
 					</div>
 				</li>
 
-				<li class="toolbar-trigger toolbar-icon-bg" id="trigger-sidebar">
+				<li class="toolbar-trigger toolbar-icon-bg" id="trigger-sidebar" ng-show="minimumDistractions">
 					<a data-toggle="tooltips" data-placement="right" title="See Intelligent Insights">
 						<span class="icon-bg smartViewIconTop">
 							<i class="ti ti-dashboard smartViewIconTopColor"></i>
@@ -152,7 +152,8 @@
 												<div class="panel-body">
 													<div class="inbox-mail-heading">
 														<div class="clearfix">
-															<div class="pull-left">
+
+															<div class="sectionSeekerContainer pull-left">
 														        <button class="btn btn-lg btn-default" ng-click="moveSectionLeft()"><i class="ti ti-angle-left"></i></button>
 														        <div class="btn-group">
 										                            <button class="btn btn-lg btn-default-alt questionSectionButton" ng-repeat="sectionTiles in sectionDetails track by $index" ng-click="loadSection($index + 1)" ng-class="{'questionSectionButtonActive' : isActiveSection($index + 1)}">
@@ -162,12 +163,25 @@
 										                        </div>
 										                        <button class="btn btn-lg btn-default" ng-click="moveSectionRight()" style="margin-left: 5px;"><i class="ti ti-angle-right"></i></button>
 														    </div>
-														    <div class="pull-right hidden-xs">
+
+														    <div class="pull-right">
 														    	<button class="btn btn-warning pull-right" id="show-calculator-button" style="font-size: 12px; font-weight: 400; text-transform: none; margin-top: 5px; margin-right: 5px;"><i class="ti ti-tablet" style="margin-right: 5px"></i>Calculator</button>
 														    </div>
 														</div>
 													</div>
 
+
+												<!-- MINIMUM DISTRACTED VIEW -->
+												<div ng-show="minimumDistractions">
+													<div class="clearfix">
+														<h3 class="examQuestionTitle pull-left">Question {{displayingQuestion.number}}</h3>
+														<span class="pull-right">MCQ | Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
+													</div>
+												</div>
+
+
+												<!-- DEFAULT VIEW -->
+												<div ng-show="!minimumDistractions">
 													<div class="clearfix">
 														<h4 class="inbox-read-title pull-left">Question Type: <b>MCQ</b></h4>
 														<span class="pull-right">Marks for Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
@@ -188,7 +202,7 @@
 																</span>
 															</div>
 															
-															<div class="btn-group">
+															<div class="btn-group" ng-show="!minimumDistractions">
 																<span class="inbox-read-sent-info" style="margin-right: 10px;">View in</span>
 															  	<span class="btn btn-sm btn-primary "><i class="ti ti-share visible-xs"></i><span class="hidden-xs">English</span></span>
 																<a href="#" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -201,10 +215,16 @@
 															</div>
 														</div>
 													</div>
+												</div>
+
+
+
+
+
 
 													<!-- Smart Progress Bar -->
 													<div class="smartQuestionLevelProgressBar">
-														<div class="progress showProgress" ng-show="criprInsightsEnabled">
+														<div class="progress showProgress" ng-show="criprInsightsEnabled && !minimumDistractions">
 							                                <div class="progress-bar" ng-class="getProgressBarClass()" ng-style="{'width': currentQuestionTimePercentageLapsed + '%'}"> </div>
 							                          	</div>
 						                          	</div>
@@ -215,7 +235,7 @@
 														</div>
 														<div class="questionAttemptOptions">
 															<div class="row" style="padding: 0 10px;">
-																<div class="col-md-12">
+																<div class="col-md-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'A'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'A')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'A'"> 
@@ -223,7 +243,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-12">
+																<div class="col-md-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'B'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'B')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'B'"> 
@@ -231,7 +251,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-12">
+																<div class="col-md-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'C'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'C')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'C'"> 
@@ -239,7 +259,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-12">
+																<div class="col-md-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'D'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'D')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'D'"> 
@@ -253,12 +273,12 @@
 													<hr>
 													<div class="msg-attachments row" style="margin: 0">
 														<div class="row">
-															<div class="col-md-6">
-																<button ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-inverse-alt btn-lg">Mark for Review & Next</button>
-																<button ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-inverse-alt btn-lg">Clear Response</button>
+															<div class="col-md-9">
+																<button ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-inverse-alt btn-lg centerMobileButton">Mark for Review & Next</button>
+																<button ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-inverse-alt btn-lg centerMobileButton">Clear Response</button>
 															</div>
-															<div class="col-md-6">
-																<button class="btn btn-primary btn-lg pull-right" ng-click="saveAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)">Save & Next</button>
+															<div class="col-md-3">
+																<button class="btn btn-primary btn-lg pull-right centerMobileButton" ng-click="saveAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)">Save & Next</button>
 															</div>
 														</div>
 													</div>
@@ -281,7 +301,7 @@
 								            </div>
 
 
-											<div class="panel" style="margin: 0 0 10px 0">
+											<div class="panel" style="margin: 0 0 10px 0" ng-show="!minimumDistractions">
 								                <div class="panel-body examNavigation" style="padding: 10px 6px !important">
 								                	<div class="row">
 								            			<div class="col-md-2">
@@ -342,7 +362,7 @@
                             </div> <!-- .container-fluid -->
                         </div> <!-- #page-content -->
                     </div>
-                    <footer role="contentinfo">
+                    <footer role="contentinfo" ng-show="!minimumDistractions">
 					    <div class="clearfix">
 					        <ul class="list-unstyled list-inline pull-left">
 					            <li><h6 style="margin: 0; text-transform: none">&copy; 2025 Crispr Learning</h6></li>

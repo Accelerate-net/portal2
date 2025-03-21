@@ -37,6 +37,14 @@ angular.module('attemptExamApp', ['ngCookies'])
     $scope.criprInsightsEnabled = localStorage.getItem("criprInsightsEnabled") ? localStorage.getItem("criprInsightsEnabled") == 1 : false;
     $scope.currentQuestionTimePercentageLapsed = 0;
     $scope.currentQuestionAnswered = false;
+    $scope.minimumDistractions = false;
+
+
+    $scope.toggleMinimumDistractions = function() {
+        var toggleValue = localStorage.getItem("minimumDistractionsEnabled") ? localStorage.getItem("minimumDistractionsEnabled") == 1 : false;
+        $scope.minimumDistractions = !toggleValue;
+        localStorage.setItem("minimumDistractionsEnabled", $scope.minimumDistractions ? 1 : 0);
+    }
 
     $scope.toggleCrisprInsights = function() {
         var toggleValue = localStorage.getItem("criprInsightsEnabled") ? localStorage.getItem("criprInsightsEnabled") == 1 : false;
@@ -149,29 +157,99 @@ angular.module('attemptExamApp', ['ngCookies'])
         window.history.pushState({}, '', url);
     }
 
+    // $scope.loadSection = function(sectionId) {
+    //     $scope.loadSectionWithQuestion(sectionId, 1); //First question of the section
+    // }
+
+    // $scope.moveSectionLeft = function() {
+    //     var currentSection = localStorage.getItem("currentSectionOpen") ? localStorage.getItem("currentSectionOpen") : 1;
+    //     currentSection--;
+
+    //     if(currentSection < 1)
+    //         currentSection = 1;
+    //     $scope.loadSection(currentSection);
+    // }
+
+    // $scope.moveSectionRight = function() {
+    //     var currentSection = localStorage.getItem("currentSectionOpen") ? localStorage.getItem("currentSectionOpen") : 1;
+    //     currentSection++;
+
+    //     if(currentSection > $scope.sectionDetails.length)
+    //         currentSection = $scope.sectionDetails.length;
+    //     $scope.loadSection(currentSection);
+    // }
+
     $scope.loadSection = function(sectionId) {
-        $scope.loadSectionWithQuestion(sectionId, 1); //First question of the section
-    }
+        $scope.loadSectionWithQuestion(sectionId, 1); // Load the first question of the section
+
+        // Auto-scroll the active button into the center
+        setTimeout(() => {
+            let container = document.querySelector(".sectionSeekerContainer");
+            let activeButton = container?.querySelector(".questionSectionButtonActive");
+
+            if (activeButton) {
+                activeButton.scrollIntoView({ 
+                    behavior: "smooth", 
+                    inline: "center",  // Ensures horizontal centering
+                    block: "nearest"   // Prevents vertical scrolling
+                });
+            }
+        }, 100);
+    };
+
 
     $scope.moveSectionLeft = function() {
-        var currentSection = localStorage.getItem("currentSectionOpen") ? localStorage.getItem("currentSectionOpen") : 1;
+        var currentSection = localStorage.getItem("currentSectionOpen") ? parseInt(localStorage.getItem("currentSectionOpen")) : 1;
         currentSection--;
 
-        if(currentSection < 1)
+        if (currentSection < 1) {
             currentSection = 1;
+        }
+
+        localStorage.setItem("currentSectionOpen", currentSection);
         $scope.loadSection(currentSection);
-    }
+
+        // Auto-scroll without Y-axis movement
+        setTimeout(() => {
+            let container = document.querySelector(".sectionSeekerContainer");
+            let activeButton = container?.querySelector(".questionSectionButtonActive");
+
+            if (activeButton) {
+                activeButton.scrollIntoView({ 
+                    behavior: "smooth", 
+                    inline: "center",  
+                    block: "nearest"  
+                });
+            }
+        }, 100);
+    };
+
 
     $scope.moveSectionRight = function() {
-        var currentSection = localStorage.getItem("currentSectionOpen") ? localStorage.getItem("currentSectionOpen") : 1;
+        var currentSection = localStorage.getItem("currentSectionOpen") ? parseInt(localStorage.getItem("currentSectionOpen")) : 1;
         currentSection++;
 
-        if(currentSection > $scope.sectionDetails.length)
+        if (currentSection > $scope.sectionDetails.length) {
             currentSection = $scope.sectionDetails.length;
+        }
+
+        localStorage.setItem("currentSectionOpen", currentSection);
         $scope.loadSection(currentSection);
-    }
 
+        // Auto-scroll without Y-axis movement
+        setTimeout(() => {
+            let container = document.querySelector(".sectionSeekerContainer");
+            let activeButton = container?.querySelector(".questionSectionButtonActive");
 
+            if (activeButton) {
+                activeButton.scrollIntoView({ 
+                    behavior: "smooth", 
+                    inline: "center",  // Ensures horizontal centering
+                    block: "nearest"   // Prevents unnecessary vertical scrolling
+                });
+            }
+        }, 100);
+    };
 
 
 
