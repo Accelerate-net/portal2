@@ -130,6 +130,28 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.loadSectionWithQuestion(nextSection, nextQuestion);
     }
 
+
+    $scope.getNumberOfQuestionsForReviewInCurrentSection = function(currentSectionData) {
+
+        if(!currentSectionData || !currentSectionData.questions || !$scope.answerDisplayContent)
+            return 0;
+
+        let count = 0;
+        let questionsArray = Array.isArray(currentSectionData.questions)
+            ? currentSectionData.questions
+            : Object.values(currentSectionData.questions);
+
+        questionsArray.forEach(question => {
+            let questionId = question.questionDisplayKey;
+            if ($scope.answerDisplayContent[questionId] && ($scope.answerDisplayContent[questionId].t === 2 || $scope.answerDisplayContent[questionId].t === 3)) {
+                count++;
+            }
+        });
+
+        return count;
+    }
+
+
     $scope.loadSectionWithQuestion = function(sectionId, questionId) {
         $scope.currentSection = $scope.examDetails[sectionId];
         if(!$scope.currentSection) {
@@ -779,7 +801,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                         $scope.countdownElement.textContent = "Submitting";
                         $scope.saveExamProgress("TERMINATE");
                     } else {
-                        document.getElementById("bootbox-demo-3").classList.remove("active");
+                        document.getElementById("submit-exam-button-1").classList.remove("active");
                         $scope.countdownElement.textContent = "Submit Exam"
                         $scope.countdown = 5;
                         $scope.isSubmitClicked = false;
@@ -788,29 +810,41 @@ angular.module('attemptExamApp', ['ngCookies'])
             });
     }
 
-    $scope.getExamConfirmation = function() {
 
-        if($scope.isSubmitClicked)
-            return;
 
-        $scope.isSubmitClicked = true;
-        document.getElementById("bootbox-demo-3").classList.add("active");
-
-        $scope.startCountdown = function() {
-            $scope.countdownElement.textContent = `Submitting in ${$scope.countdown}s`;
-            $scope.countdown--;
-
-            // If countdown is greater than 0, call $timeout again
-            if ($scope.countdown >= 0) {
-                $timeout($scope.startCountdown, 1000);
-            } else {
-                $scope.countdownElement.textContent = "Confirm Submission";
-                $scope.submitExamConfirmation();
+        //For Main Timer 1 (Web View)
+        $scope.getExamConfirmation = function() {
+            if ($scope.isSubmitClicked) {
+                // If clicked again during countdown, cancel submission
+                $scope.isSubmitClicked = false;
+                $timeout.cancel($scope.countdownPromise); // Cancel the timeout
+                $scope.countdownElement.textContent = "Submit Exam";
+                document.getElementById("submit-exam-button-1").classList.remove("active");
+                return;
             }
-        };
 
-        $scope.startCountdown();
-    }
+            // First click: Start countdown
+            $scope.isSubmitClicked = true;
+            document.getElementById("submit-exam-button-1").classList.add("active");
+
+            $scope.countdown = 5;
+            $scope.countdownElement.textContent = `Submitting in ${$scope.countdown}s. Click to continue the Exam.`;
+
+            $scope.startCountdown = function() {
+                $scope.countdown--;
+
+                if ($scope.countdown > 0) {
+                    $scope.countdownElement.textContent = `Submitting in ${$scope.countdown}s. Click to continue the Exam.`
+                    $scope.countdownPromise = $timeout($scope.startCountdown, 1000);
+                } else {
+                    $scope.countdownElement.textContent = "Confirming Submission";
+                    $scope.submitExamConfirmation();
+                }
+            };
+
+            $scope.countdownPromise = $timeout($scope.startCountdown, 1000);
+        };
+        
 
     //Clear exam related data
     function clearAllExamRelatedStorage() {

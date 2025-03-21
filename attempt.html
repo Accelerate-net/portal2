@@ -85,6 +85,31 @@
 		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="fa fa-eye"></i></span></i></a>
 		        </li>
 				
+
+				<li class="dropdown toolbar-icon-bg" ng-show="1==1">
+					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-layout-grid3"></i></span><span class="badge" style="background: #512e90">{{getNumberOfQuestionsForReviewInCurrentSection(currentSection)}}</span></a>
+
+
+
+
+					<div class="dropdown-menu notifications arrow" style="padding: 0">
+						<div class="panel" style="margin: 0 0 10px 0; width: 288px; box-shadow: none;">
+							<div class="panel-heading" style="background-color: #008cff; height: 30px;">
+								<h2 style="color: #ffffff !important; padding: 6px 0 !important; margin: 0; border-radius: 0;">{{currentSection.name}}</h2>
+							</div>
+			                <div class="panel-body examNavigation">
+			                	<div class="navigation">
+							        <span ng-click="loadSectionWithQuestion(currentSection.id, key)" ng-repeat="(key, question) in currentSection.questions"><span class="square" ng-class="getAnswerDisplayButton(question.questionDisplayKey)">{{key}}</span></span>
+							    </div>
+			                </div>
+			            </div>
+
+			            <div style="width: 100%; padding: 10px">
+			            	<button class="btn btn-lg btn-info" ng-click="submitExamConfirmation()" style="margin: 10px 0; width: 248px">Submit Exam</button>
+			            </div>
+					</div>
+				</li>
+
 				<li class="dropdown toolbar-icon-bg" ng-show="criprInsightsEnabled && !minimumDistractions">
 					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-bell"></i></span><span class="badge badge-deeporange">2</span></a>
 					<div class="dropdown-menu notifications arrow">
@@ -218,7 +243,7 @@
 																</span>
 															</div>
 															
-															<div class="btn-group" ng-show="!minimumDistractions">
+															<div class="btn-group hidden-xs" ng-show="!minimumDistractions">
 																<span class="inbox-read-sent-info" style="margin-right: 10px;">View in</span>
 															  	<span class="btn btn-sm btn-primary "><i class="ti ti-share visible-xs"></i><span class="hidden-xs">English</span></span>
 																<a href="#" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -304,7 +329,7 @@
 										</div>
 										<div class="col-md-3">
 
-											<div class="panel" style="margin: 0 0 20px 0; box-shadow: none; border: 2px solid #008cff; border-radius: 0;">
+											<div class="panel tickingClockMain">
 								                <div class="panel-body" id="timerContainer" style="padding: 10px 6px !important; border-radius: 0;">
 												    <div class="timer-container">
 												        <label class="timerLabel">Time Left</label>
@@ -316,7 +341,7 @@
 
 								            </div>
 
-											<div class="panel" style="margin: 0 0 15px 0; padding: 4px" ng-show="!minimumDistractions">
+											<div class="panel examNavigationSummaryPanel" ng-show="!minimumDistractions">
 											    <div class="panelBody newView_examNavigation">
 											        <div class="newView_row">
 											            <div class="newView_col">
@@ -349,7 +374,7 @@
 
 
 
-											<div class="panel" style="margin: 0 0 10px 0">
+											<div class="panel examNavigationToolPanel">
 												<div class="panel-heading" style="background-color: #008cff; height: 30px;">
 													<h2 style="color: #ffffff !important; padding: 6px 0; margin: 0">{{currentSection.name}}</h2>
 												</div>
@@ -360,7 +385,7 @@
 								                </div>
 								            </div>
 
-								            <a href="javascript:;" class="btn btn-default btn-block" id="bootbox-demo-3" ng-click="getExamConfirmation()">
+								            <a href="javascript:;" class="btn btn-default btn-block examSubmissionButton1" id="submit-exam-button-1" ng-click="getExamConfirmation()">
 											    <span id="countdown">Submit Exam</span>
 											</a>
 

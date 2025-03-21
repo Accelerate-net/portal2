@@ -31125,7 +31125,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 }
 
 /* Button styling */
-#bootbox-demo-3 {
+#submit-exam-button-1 {
     position: relative;
     overflow: hidden;
     background-color: #f0f0f0; /* Initial background color */
@@ -31148,7 +31148,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     }
 }
 
-#bootbox-demo-3::before {
+#submit-exam-button-1::before {
     content: '';
     position: absolute;
     top: 0;
@@ -31160,8 +31160,9 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     transition: width 5s linear; /* Animation duration */
 }
 
+
 /* Active state for animation */
-#bootbox-demo-3.active::before {
+#submit-exam-button-1.active::before {
     width: 100%; /* Trigger animation */
 }
 
@@ -31169,6 +31170,10 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 #countdown {
     position: relative;
     z-index: 2;
+}
+
+#submit-exam-button-1.active #countdown {
+    text-transform: none;
 }
 
 
@@ -31553,6 +31558,22 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
   padding: 0 !important;
 }
 
+.tickingClockMain {
+  margin: 0 0 20px 0; 
+  box-shadow: none; 
+  border: 2px solid #008cff; 
+  border-radius: 0;
+}
+
+.examNavigationSummaryPanel {
+  margin: 0 0 15px 0; 
+  padding: 4px;
+}
+
+.examNavigationToolPanel {
+  margin: 0 0 10px 0;
+}
+
 @media (max-width: 991px) {
     .examTitleHeader {
         opacity: 0;
@@ -31579,6 +31600,22 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 
     .mobileTimerView {
       visibility: visible;
+    }
+
+    .tickingClockMain {
+      display: none !important;
+    }
+
+    .examNavigationSummaryPanel {
+      display: none !important;
+    }
+
+    .examNavigationToolPanel {
+      display: none !important;
+    }
+
+    .examSubmissionButton1 {
+      display: none !important;
     }
 
 }
