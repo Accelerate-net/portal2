@@ -168,7 +168,7 @@
                 localStorage.getItem("userLastActiveTime") !== null
             );
 
-            var currentEpoch = new Date().getTime();
+            var currentEpoch = Math.floor(new Date().getTime() / 1000);
             var userLastActive = localStorage.getItem("userLastActiveTime") ? localStorage.getItem("userLastActiveTime") : 0;
             
             //User activity not found, or older than 6 hrs. Safe to delete.

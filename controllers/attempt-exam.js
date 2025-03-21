@@ -171,12 +171,75 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.loadSection(currentSection);
     }
 
+    function isExamLocalDataPresent() {
+        return (
+            localStorage.getItem("questionTimeTracker") !== null ||
+            localStorage.getItem("examSubmissionData") !== null
+        );
+    }
+
+
+    $scope.loadLastSubmissionDataFromServer = function() {
+
+        console.log('pulling submission from server')
+
+        let browserFingerprint = {
+            screenWidth: screen.width,
+            screenHeight: screen.height,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            language: navigator.language,
+            platform: navigator.platform,
+            cpuCores: navigator.hardwareConcurrency,
+            deviceMemory: navigator.deviceMemory || "unknown",
+        };
+
+        var data = {
+            token : getExamTokenFromURL(),
+            fingerprint: browserFingerprint
+        }
+        $http({
+          method  : 'POST',
+          url     : 'https://crisprtech.app/crispr-apis/user/fetch-latest-submission.php',
+          data    :  data,
+          headers : {
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer " + getUserToken()
+          }
+         })
+         .then(function(response) {
+            if(response.data.status == "success"){
+                var submissionData = response.data.data;
+
+                let timeData = {};
+                let answerData = {};
+
+                for (let key in submissionData) {
+                    if (submissionData.hasOwnProperty(key)) {
+                        timeData[key] = parseInt(submissionData[key].ts);
+                    }
+
+                    if (submissionData[key].t > 0) {
+                        answerData[key] = {
+                            t: submissionData[key].t,
+                            a: submissionData[key].a
+                        };
+                    }
+                }
+
+                localStorage.setItem("questionTimeTracker", JSON.stringify(timeData));
+                localStorage.setItem("examSubmissionData", JSON.stringify(answerData));
+
+            }
+        });
+    }
+
+
 
     $scope.initialiseExam = function(){
 
         let browserFingerprint = {
-            screenWidth: 1157, //screen.width,
-            screenHeight: 685, //screen.height,
+            screenWidth: screen.width,
+            screenHeight: screen.height,
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             language: navigator.language,
             platform: navigator.platform,
@@ -199,7 +262,7 @@ angular.module('attemptExamApp', ['ngCookies'])
          })
          .then(function(response) {
             if(response.data.status == "success"){
-                
+
                 $scope.examDetails = response.data.data;
                 $scope.examDetailsFound = true;
                 $scope.examMetadata = response.data.metadata;
@@ -222,6 +285,9 @@ angular.module('attemptExamApp', ['ngCookies'])
                 const display = document.querySelector('#timerCountDown');
                 $scope.startTimer(totalTimeRemaining, display);
 
+                if(!isExamLocalDataPresent()) {
+                    $scope.loadLastSubmissionDataFromServer();
+                }
             } else {
                 $scope.examDetailsFound = false;
                 document.getElementById("examErrorBanner").style.display = 'flex';
@@ -450,7 +516,7 @@ angular.module('attemptExamApp', ['ngCookies'])
             $scope.trackIndividualQuestionTime();
 
             //Track user last active time (to manage exam data)
-            localStorage.setItem("userLastActiveTime", new Date().getTime());
+            localStorage.setItem("userLastActiveTime", Math.floor(new Date().getTime() / 1000));
 
 
             //Update overall counter
@@ -497,8 +563,9 @@ angular.module('attemptExamApp', ['ngCookies'])
         for (let key in submissionData) {
             let { t, a } = submissionData[key];
             
-            if ([3, 4].includes(t) && timeTrackerData.hasOwnProperty(key)) {
+            if (timeTrackerData.hasOwnProperty(key)) {
                 result[key] = {
+                    t: t,
                     ts: timeTrackerData[key],
                     a: a
                 };
@@ -509,6 +576,7 @@ angular.module('attemptExamApp', ['ngCookies'])
         for (let key in timeTrackerData) {
             if (!result.hasOwnProperty(key)) {
                 result[key] = {
+                    t: t,
                     ts: timeTrackerData[key],
                     a: ""
                 };
