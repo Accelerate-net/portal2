@@ -724,7 +724,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     //Auto save every minute
-    $interval($scope.saveExamProgress, 60000);
+    $interval($scope.saveExamProgress, 5000);
 
 
 });
