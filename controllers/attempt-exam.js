@@ -229,6 +229,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                 localStorage.setItem("questionTimeTracker", JSON.stringify(timeData));
                 localStorage.setItem("examSubmissionData", JSON.stringify(answerData));
 
+                $scope.loadSectionWithQuestion(sectionId, questionId);
             }
         });
     }
@@ -286,7 +287,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                 $scope.startTimer(totalTimeRemaining, display);
 
                 if(isExamLocalDataAbsent()) {
-                    $scope.loadLastSubmissionDataFromServer();
+                    $scope.loadLastSubmissionDataFromServer(sectionId, questionId);
                 }
             } else {
                 $scope.examDetailsFound = false;
