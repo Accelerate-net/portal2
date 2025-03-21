@@ -171,13 +171,84 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.loadSection(currentSection);
     }
 
+
+
+
+
     function isExamLocalDataAbsent() {
         return (
             localStorage.getItem("questionTimeTracker") === null ||
-            localStorage.getItem("examSubmissionData") === null
+            localStorage.getItem("examSubmissionData") === null ||
+            localStorage.getItem("crisprMockTestToken") === null
         );
     }
 
+
+    function rememberExamToken() {
+        var currentToken = localStorage.getItem("crisprMockTestToken") ? localStorage.getItem("crisprMockTestToken") : null;
+        if(!currentToken || currentToken == null) { //Do not override
+            var examToken = getExamTokenFromURL();
+            localStorage.setItem("crisprMockTestToken", examToken);
+        }
+    }
+
+    
+    $scope.getExamCacheClearConfirmation = function(previousExamToken) {
+        bootbox.confirm({
+                title: "<p style='color: #444; font-size: 24px; margin: 0; font-weight: bold;'>Conflicting Exams Found</p>",
+                message: "<p style='color: #444; font-size: 18px; font-weight: 300; line-height: 28px;'>The system detected that you exited a previous exam without submitting it. To ensure your progress is saved, please return and submit that exam first. If you choose to proceed with this new exam, you may lose any unsaved progress from your previous exam.</p>",
+                buttons: {
+                    cancel: {
+                        label: "Visit Previous Test",
+                        className: "btn-default" // Red button
+                    },
+                    confirm: {
+                        label: "Start New",
+                        className: "btn-success"
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        //Clear Cached local storage and continue
+                        clearAllExamRelatedStorage();
+                        
+                        setTimeout(function() {
+                            $scope.initialiseExam();
+                        }, 200);
+                    } else {
+                        //Go back to old exam
+                        const url = new URL(window.location.href);
+                        url.searchParams.set('exam', encodeURIComponent(previousExamToken));
+                        window.history.replaceState(null, '', url.toString());
+
+                        setTimeout(function() {
+                            location.reload();
+                        }, 200);
+                    }
+                }
+            });
+    }
+
+
+
+    $scope.checkForTokenMismatch = function() {
+        var currentToken = localStorage.getItem("crisprMockTestToken") ? localStorage.getItem("crisprMockTestToken") : null;
+        if((currentToken && currentToken != null && currentToken != '') && currentToken != getExamTokenFromURL()) { //Already another token present
+            //Check for last user active time --> more than 30 mins, ask user for confirmation
+            var userLastActive = localStorage.getItem("userLastActiveTime") ? localStorage.getItem("userLastActiveTime") ? 0;
+            var currentTime = Math.floor(new Date().getTime() / 1000;
+            if(currentTime - userLastActive > 1) {
+                //User has been inactive on the other exam, ask user to clear the cache
+                $scope.getExamCacheClearConfirmation(currentToken);
+                return;
+            }
+        }        
+    }
+
+    function isValidExamFound() { //no exam token conflicts
+        var currentToken = localStorage.getItem("crisprMockTestToken") ? localStorage.getItem("crisprMockTestToken") : null;
+        return currentToken == getExamTokenFromURL();
+    }
 
     $scope.loadLastSubmissionDataFromServer = function() {
 
@@ -234,9 +305,10 @@ angular.module('attemptExamApp', ['ngCookies'])
         });
     }
 
-
-
     $scope.initialiseExam = function(){
+
+        //Exam attempting and intended token are matching (to avoid conflicts)
+        $scope.checkForTokenMismatch();
 
         let browserFingerprint = {
             screenWidth: screen.width,
@@ -263,6 +335,8 @@ angular.module('attemptExamApp', ['ngCookies'])
          })
          .then(function(response) {
             if(response.data.status == "success"){
+
+                rememberExamToken(); //to prevent exam interruption
 
                 $scope.examDetails = response.data.data;
                 $scope.examDetailsFound = true;
@@ -294,8 +368,11 @@ angular.module('attemptExamApp', ['ngCookies'])
                 document.getElementById("examErrorBanner").style.display = 'flex';
             }
         });
-      }
+    
+    }
 
+
+    //Default first method call
     $scope.initialiseExam();
 
 
@@ -643,14 +720,17 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.startCountdown();
     }
 
-    function renderExamCompleteScreen(reportURL) {
-        //Clear exam related data
+    //Clear exam related data
+    function clearAllExamRelatedStorage() {
         localStorage.removeItem("currentSectionOpen");
         localStorage.removeItem("questionTimeTracker");
         localStorage.removeItem("examSubmissionData");
         localStorage.removeItem("userLastActiveTime");
-        
+        localStorage.removeItem("crisprMockTestToken");   
+    }
 
+    function renderExamCompleteScreen(reportURL) {
+        clearAllExamRelatedStorage();
         document.getElementById("examCompletedBanner").style.display = 'flex';
         document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
     }
@@ -726,7 +806,9 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     var autoSave = $interval(function() {
-        $scope.saveExamProgress();
+        if(isValidExamFound()) { //save if exam found only
+            $scope.saveExamProgress();
+        }
     }, 10000);
 
 });
