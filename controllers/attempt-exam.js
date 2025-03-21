@@ -171,10 +171,10 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.loadSection(currentSection);
     }
 
-    function isExamLocalDataPresent() {
+    function isExamLocalDataAbsent() {
         return (
-            localStorage.getItem("questionTimeTracker") !== null ||
-            localStorage.getItem("examSubmissionData") !== null
+            localStorage.getItem("questionTimeTracker") === null ||
+            localStorage.getItem("examSubmissionData") === null
         );
     }
 
@@ -285,7 +285,7 @@ angular.module('attemptExamApp', ['ngCookies'])
                 const display = document.querySelector('#timerCountDown');
                 $scope.startTimer(totalTimeRemaining, display);
 
-                if(!isExamLocalDataPresent()) {
+                if(isExamLocalDataAbsent()) {
                     $scope.loadLastSubmissionDataFromServer();
                 }
             } else {
