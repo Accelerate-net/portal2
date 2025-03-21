@@ -30696,7 +30696,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     padding: 0 10px;
 }
 
-#timerCountDown {
+#timerCountDown1, #timerCountDown2 {
     font-size: 24px !important;
     font-weight: bold;
     color: #444;
@@ -30712,12 +30712,12 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 }
 
 
-#timerCountDown span {
+#timerCountDown1 span, #timerCountDown2 span {
     display: inline-block;
     text-align: center;
 }
 
-#timerCountDown .blink {
+#timerCountDown1 .blink, #timerCountDown2 .blink {
     animation: blink 1s infinite;
 }
 
@@ -30726,7 +30726,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     50% { opacity: .1; }
 }
 
-#timerCountDown .colon {
+#timerCountDown1 .colon, #timerCountDown2 .colon {
     width: auto;
     animation: blink 1s infinite;
     padding: 0px 2px !important;
@@ -31363,27 +31363,32 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     color: #FFF;
     font-weight: bold;
 }
-
 /* Base button styles */
 .examBannerPopup-button {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     border: 2px solid transparent;
     transition: background-color 0.3s ease, color 0.3s ease;
+    width: auto;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Button container for alignment */
+.examBannerPopup-buttons {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
 /* Primary button (See Performance) */
 .examBannerPopup-button-primary {
     background-color: #2f7871;
     color: #fff;
-    float: right;
-}
-
-.examBannerPopup-content p {
-  font-weight: 300 !important;
 }
 
 .examBannerPopup-button-primary:hover {
@@ -31394,10 +31399,22 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 .examBannerPopup-button-secondary {
     background-color: white;
     color: #4a4a4a;
+    border: 2px solid #ccc;
 }
 
 .examBannerPopup-button-secondary:hover {
     background-color: #e0e0e0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .examBannerPopup-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .examBannerPopup-button {
+        width: 100%; /* Make buttons full-width */
+    }
 }
 
 
@@ -31440,19 +31457,32 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 /* Button styles */
 .examErrorBannerPopup-button {
     margin-top: 20px;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Slightly larger padding for better touch targets */
     background-color: white;
     color: #4a4a4a;
-    border: none;
+    border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    min-width: 120px;
 }
 
+/* Hover effect */
 .examErrorBannerPopup-button:hover {
     background-color: #e0e0e0;
 }
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .examErrorBannerPopup-button {
+        width: 100%; /* Full width on small screens */
+        padding: 14px; /* Larger padding for better usability */
+        font-size: 18px; /* Slightly bigger text */
+    }
+}
+
 
 .sectionSeekerContainer {
     display: flex;
@@ -31493,6 +31523,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     display: none; /* Hides scrollbar */
 }
 
+
 .examTitleHeader {
     margin: 16px 0 0 0;
     font-size: 21px;
@@ -31500,17 +31531,56 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    max-width: 70%;
     font-weight: bold;
 }
 
+#examResponseButtonsHolder .btn-default {
+  border-color: #757575 !important
+}
+
+#examResponseButtonsHolder .btn-default:hover {
+  background: #616161 !important;
+  color: #fff !important;
+}
+
+.mobileTimerView {
+  visibility: hidden;
+  margin-top: 6px;
+}
+
+.mobileTimerView .timer-container {
+  padding: 0 !important;
+}
 
 @media (max-width: 991px) {
-  .centerMobileButton {
-      float: unset !important;
-      width: 100% !important;
-      margin-bottom: 5px !important;
-  }
+    .examTitleHeader {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        position: absolute;
+        left: 15px;
+    }
+
+    .animatedLogoSpace {
+        display: inline-block;
+        width: 100px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+        background-color: #007bff; /* Example color */
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .centerMobileButton {
+        float: unset !important;
+        width: 100% !important;
+        margin-bottom: 5px !important;
+    }
+
+    .mobileTimerView {
+      visibility: visible;
+    }
+
 }
 
 @media (max-width: 640px) {
@@ -31518,4 +31588,76 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     width: 100% !important;
   }
 }
+
+
+
+.newView_panelBody.newView_examNavigation {
+    padding: 10px 6px !important;
+}
+
+.newView_row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.newView_col {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 5px;
+}
+
+.newView_square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.newView_questionAnswered {
+    background-image: url(https://student-cms.classplusapp.com/static/media/answered.dc0ff0ae.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.newView_questionNotAnswered {
+    background-image: url(https://student-cms.classplusapp.com/static/media/notanswerd.2ba7912b.svg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.newView_notVisited {
+    background-color: #eeeeee;
+    border: 1px solid gray;
+    border-radius: 4px;
+    color: #444;
+}
+
+.newView_markedForReview {
+    background-image: url(data:image/png;base64,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);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.newView_answeredAndMarkedForReview {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADNUlEQVR4nO2ZzU8TQRjGJ6hRLyIqM2hQWkpLqwH8oLWziL161YSDXozGmKiBmQLycXEVmiKllRYqhYsxMfEgSDAxmBg8aETDkfIP+JEQ1OjRQhTGTK2Gpa3t0naXNX2SN+lhP37P9J3Zd94BIK+88sqCxAI7ctowoh0Y0TEBkTCG9JsAyRKP6G9EwgIko/wafi2/B6it+j10L0bUhSH5ICDK5ASG9D2/lz9DcfATB64UCZAGMCQRueDxRkiEP8tRSHYqAl9XTM4IkHzKFDxBLPBn5wy8ATRs4iOVA3AmDeLn78oqvKNM3CYgMp57ePrHxDh/ZxZHnowqB09/zw1EnziAuDljA8qkDU0W/ZlPWPXgmYDoih06T68L/lhReyFGZF5lA4yvTnzZlm0AQzKwAeBZNCANyIK3FreWCJB8Vx0crfrY7b62L/3RR9SlNrSw1gSirjTxxQJep6gNLMSlEXmXVgHIK0XVYVGSKKG1KQ3UIdKpOihKGm3p5P/YBgBlidOIPkppQIB0TnVQlCxIOA0D5Kv6oDRhYEi+pGNgaeMaoIuaMoBLnUw3E/ob+tdDTFMpZDe1SA1MBZc1NYlrT3ZIDFQ8DkQ0tYzWXLwlMVB5z/dRUx+yypBXYsDs7Z3UTClhL2uOTtrVBg7ecJ/XTDFXc+GmBL58cvAHENPcI6tdTuP9TmZ4NihNn4G+aaCVDU311S4JvG56iJmvu44CLXQjaus743LfHOybBXJl29W4Q+lNvd3YwgxPB6S5/yK4XNUhloMM2iorSsAft7Qy40O/NHVmQszS0+sDmYj3KnMNb7W2xY189MM17JWfOkq2FnGpk1U3dTP9q7tx8MYHdz47xCz1R09VNG7NZnMX65rZ4XMiM0zEj3oMfqGqp0d+MyvlP4Fo/3rmBNY3M5utnR05KzKLx5NwxHWxMI14w3afbzvIlXivkrf75BhIBqtbs9qYb3v8QAnx4yA5R0z/hH8TYqZh71y1220CSosf0AmIdqeqnROD6qeDPykGPW7PbjYH6EgtwSZMVIdIeW7Fmozu72DGr/mVwxTDhXzTe981bAp7nh7p6L4HLI1vUps4rL/Af6NfKdwjFRNmAbIAAAAASUVORK5CYII=);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.newView_attemptSummaryText {
+    font-size: 14px;
+    color: #444;
+    margin-left: 3px;
+    display: inline-block;
+}
+
+
+
 

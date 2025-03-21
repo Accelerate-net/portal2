@@ -41,9 +41,8 @@
 		            The exam you’re trying to attempt may have already ended.<br>
 		            You can start a fresh exam from the Candidate Portal. Let’s keep the preparation going strong.
 		        </p>
-		        <button class="examErrorBannerPopup-button" onclick="window.location.href='https://candidate.crisprlearning.com'">
-		            Go to Candidate Portal
-		        </button>
+		        <button class="examErrorBannerPopup-button" onclick="window.location.href='https://candidate.crisprlearning.com'"> Go to Candidate Portal </button>
+		        <button class="examErrorBannerPopup-button" onclick="window.location.reload(true);">Refresh</button>
 		    </div>
 		</div>
 
@@ -51,7 +50,8 @@
 		    <div class="examBannerPopup-content">
 		    	<h1 class="examBannerPopup-title">The Exam is now Completed!</h1>
 		        <p>
-		        	Your exam has been successfully submitted. You can review your performance through a detailed report. If not now, take a break — you can check it later from the Candidate Portal.
+		        	Your exam has been successfully submitted. You can review your performance through a detailed report.
+		        	If not now, take a break — you can check it later from the Candidate Portal.
 		        </p>
 		        <button class="examBannerPopup-button examBannerPopup-button-primary" onclick="window.close()">Check Later</button>
 		        <button id="examCompletedBannerReport" class="examBannerPopup-button examBannerPopup-button-secondary">See Performance</button>
@@ -60,13 +60,29 @@
 
         <header id="topnav" class="navbar navbar-default navbar-fixed-top" role="banner" ng-show="examDetailsFound">
 			<div class="logo-area" ng-show="!minimumDistractions">		
-				<span class="navbar-brand" href=""></span>
+				<span class="navbar-brand animatedLogoSpace"></span>
 				<h1 class="examTitleHeader">{{examMetadata.title}}</h1>
 			</div>
 
 			<ul class="nav navbar-nav toolbar pull-right" style="padding-right: 10px;">
+
+				<li class="toolbar-icon-bg mobileTimerView">
+					<div class="timer-container">
+				        <label class="timerLabel">Time Left</label>
+				        <div id="timerCountDown1">
+				            <span class="hours">00</span><span class="colon blink">:</span><span class="minutes">00</span><span class="colon blink">:</span><span class="seconds">00</span>
+				        </div>
+				    </div>
+		        </li>
+
 		        <li class="toolbar-icon-bg hidden-xs" id="trigger-fullscreen"> <!-- hidden-xs will hide on Mobile -->
 		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="ti ti-fullscreen"></i></span></i></a>
+		        </li>
+
+
+
+		        <li class="toolbar-icon-bg hidden-xs" ng-click="toggleMinimumDistractions()"> <!-- hidden-xs will hide on Mobile -->
+		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="fa fa-eye"></i></span></i></a>
 		        </li>
 				
 				<li class="dropdown toolbar-icon-bg" ng-show="criprInsightsEnabled && !minimumDistractions">
@@ -271,11 +287,11 @@
 														</div>
 													</div>
 													<hr>
-													<div class="msg-attachments row" style="margin: 0">
+													<div class="msg-attachments row" style="margin: 0" id="examResponseButtonsHolder">
 														<div class="row">
 															<div class="col-md-9">
-																<button ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-inverse-alt btn-lg centerMobileButton">Mark for Review & Next</button>
-																<button ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-inverse-alt btn-lg centerMobileButton">Clear Response</button>
+																<button ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-default btn-lg centerMobileButton">Mark for Review & Next</button>
+																<button ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-default btn-lg centerMobileButton">Clear Response</button>
 															</div>
 															<div class="col-md-3">
 																<button class="btn btn-primary btn-lg pull-right centerMobileButton" ng-click="saveAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)">Save & Next</button>
@@ -292,7 +308,7 @@
 								                <div class="panel-body" id="timerContainer" style="padding: 10px 6px !important; border-radius: 0;">
 												    <div class="timer-container">
 												        <label class="timerLabel">Time Left</label>
-												        <div id="timerCountDown">
+												        <div id="timerCountDown2">
 												            <span class="hours">00</span><span class="colon blink">:</span><span class="minutes">00</span><span class="colon blink">:</span><span class="seconds">00</span>
 												        </div>
 												    </div>
@@ -300,47 +316,38 @@
 
 								            </div>
 
+											<div class="panel" style="margin: 0 0 15px 0; padding: 4px" ng-show="!minimumDistractions">
+											    <div class="panelBody newView_examNavigation">
+											        <div class="newView_row">
+											            <div class="newView_col">
+											                <span class="newView_square newView_questionAnswered">{{answerDisplaySummaryMatric(4)}}</span>
+											                <span class="newView_attemptSummaryText">Answered</span>
+											            </div>
+											            <div class="newView_col">
+											                <span class="newView_square newView_questionNotAnswered">{{answerDisplaySummaryMatric(1)}}</span>
+											                <span class="newView_attemptSummaryText">Not Answered</span>
+											            </div>
+											        </div>
+											        <div class="newView_row">
+											            <div class="newView_col">
+											                <span class="newView_square newView_notVisited">{{answerDisplaySummaryMatric(0)}}</span>
+											                <span class="newView_attemptSummaryText">Not Visited</span>
+											            </div>
+											            <div class="newView_col">
+											                <span class="newView_square newView_markedForReview">{{answerDisplaySummaryMatric(2)}}</span>
+											                <span class="newView_attemptSummaryText">Marked for Review</span>
+											            </div>
+											        </div>
+											        <div class="newView_row" style="margin: 0">
+											            <div class="newView_col">
+											                <span class="newView_square newView_answeredAndMarkedForReview">{{answerDisplaySummaryMatric(3)}}</span>
+											                <span class="newView_attemptSummaryText">Answered & Marked for Review (will also be evaluated)</span>
+											            </div>
+											        </div>
+											    </div>
+											</div>
 
-											<div class="panel" style="margin: 0 0 10px 0" ng-show="!minimumDistractions">
-								                <div class="panel-body examNavigation" style="padding: 10px 6px !important">
-								                	<div class="row">
-								            			<div class="col-md-2">
-								            				<span><span class="square questionAnswered">{{answerDisplaySummaryMatric(4)}}</span></span>
-								            			</div>
-								            			<div class="col-md-4">
-								            				<span class="attemptSummaryText">Answered</span>
-								            			</div>
-								            			<div class="col-md-2">
-								            				<span><span class="square questionNotAnswered">{{answerDisplaySummaryMatric(1)}}</span></span>
-								            			</div>
-								            			<div class="col-md-4">
-								            				<span class="attemptSummaryText">Not Answered</span>
-								            			</div>
-								                	</div>
-								                	<div class="row">
-								            			<div class="col-md-2">
-								            				<span><span class="square notVisited">{{answerDisplaySummaryMatric(0)}}</span></span>
-								            			</div>
-								            			<div class="col-md-4">
-								            				<span class="attemptSummaryText">Not Visited</span>
-								            			</div>
-								            			<div class="col-md-2">
-								            				<span><span class="square markedForRevew">{{answerDisplaySummaryMatric(2)}}</span></span>
-								            			</div>
-								            			<div class="col-md-4">
-								            				<span class="attemptSummaryText">Marked for Review</span>
-								            			</div>
-								                	</div>
-								                	<div class="row">
-								            			<div class="col-md-2">
-								            				<span><span class="square answeredAndMarkedForRevew">{{answerDisplaySummaryMatric(3)}}</span></span>
-								            			</div>
-								            			<div class="col-md-8">
-								            				<span class="attemptSummaryText">Answered & Marked for Review (will also be evaluated)</span>
-								            			</div>
-								                	</div>
-								                </div>
-								            </div>
+
 
 											<div class="panel" style="margin: 0 0 10px 0">
 												<div class="panel-heading" style="background-color: #008cff; height: 30px;">
@@ -485,6 +492,70 @@
     </div>
 <!-- /Switcher -->
     <!-- Load site level scripts -->
+
+
+
+
+<script>
+    let animationInterval = null; // Store the interval ID
+    let timeouts = []; // Track all timeouts to clear when stopping
+
+    function clearAllTimeouts() {
+        while (timeouts.length) {
+            clearTimeout(timeouts.pop());
+        }
+    }
+
+    function startAnimation() {
+        if (animationInterval) return; // Prevent multiple intervals
+
+        const logo = document.querySelector(".animatedLogoSpace");
+        const title = document.querySelector(".examTitleHeader");
+
+        function showLogo() {
+            logo.style.opacity = "1";
+            title.style.opacity = "0";
+            timeouts.push(setTimeout(() => {
+                logo.style.opacity = "0";
+                timeouts.push(setTimeout(showTitle, 1000)); // Wait for fade-out
+            }, 3000));
+        }
+
+        function showTitle() {
+            title.style.opacity = "1";
+            timeouts.push(setTimeout(() => {
+                title.style.opacity = "0";
+                timeouts.push(setTimeout(showLogo, 1000)); // Wait for fade-out
+            }, 3000));
+        }
+
+        showLogo(); // Start animation cycle
+        animationInterval = setInterval(showLogo, 8000);
+    }
+
+    function stopAnimation() {
+        clearInterval(animationInterval);
+        animationInterval = null;
+        clearAllTimeouts();
+
+        const logo = document.querySelector(".animatedLogoSpace");
+        const title = document.querySelector(".examTitleHeader");
+        logo.style.opacity = "1"; // Ensure elements remain visible
+        title.style.opacity = "1";
+    }
+
+    function checkScreenWidth() {
+        if (window.innerWidth < 990) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
+    }
+
+    window.addEventListener("load", checkScreenWidth);
+    window.addEventListener("resize", checkScreenWidth);
+</script>
+
 
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> -->

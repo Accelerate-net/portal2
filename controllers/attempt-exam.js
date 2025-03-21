@@ -430,8 +430,9 @@ angular.module('attemptExamApp', ['ngCookies'])
 
                 //Start Exam Timer
                 const totalTimeRemaining = $scope.examMetadata.endTime - $scope.examMetadata.currentTime;
-                const display = document.querySelector('#timerCountDown');
-                $scope.startTimer(totalTimeRemaining, display);
+                const display1 = document.querySelector('#timerCountDown1');
+                const display2 = document.querySelector('#timerCountDown2');
+                $scope.startTimer(totalTimeRemaining, display1, display2);
 
                 if(isExamLocalDataAbsent()) {
                     $scope.loadLastSubmissionDataFromServer(sectionId, questionId);
@@ -646,12 +647,17 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     // EXAM COUNT DOWN
-    $scope.startTimer = function(duration, display) {
+    $scope.startTimer = function(duration, display1, display2) {
         let timer = duration, hours, minutes, seconds;
-        const hoursSpan = display.querySelector('.hours');
-        const minutesSpan = display.querySelector('.minutes');
-        const secondsSpan = display.querySelector('.seconds');
-        const colons = display.querySelectorAll('.blink');
+        const hoursSpan1 = display1.querySelector('.hours');
+        const minutesSpan1 = display1.querySelector('.minutes');
+        const secondsSpan1 = display1.querySelector('.seconds');
+        const colons1 = display1.querySelectorAll('.blink');
+
+        const hoursSpan2 = display2.querySelector('.hours');
+        const minutesSpan2 = display2.querySelector('.minutes');
+        const secondsSpan2 = display2.querySelector('.seconds');
+        const colons2 = display2.querySelectorAll('.blink');
         
         var intervalPromise = $interval(function() {
             //Calculate Current Questions Progress
@@ -671,19 +677,32 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
             //Update overall counter
-            hours = parseInt(timer / 3600, 10);
-            minutes = parseInt((timer % 3600) / 60, 10);
-            seconds = parseInt(timer % 60, 10);
+            hours1 = parseInt(timer / 3600, 10);
+            minutes1 = parseInt((timer % 3600) / 60, 10);
+            seconds1 = parseInt(timer % 60, 10);
 
-            hoursSpan.textContent = hours < 10 ? "0" + hours : hours;
-            minutesSpan.textContent = minutes < 10 ? "0" + minutes : minutes;
-            secondsSpan.textContent = seconds < 10 ? "0" + seconds : seconds;
+            hoursSpan1.textContent = hours1 < 10 ? "0" + hours1 : hours1;
+            minutesSpan1.textContent = minutes1 < 10 ? "0" + minutes1 : minutes1;
+            secondsSpan1.textContent = seconds1 < 10 ? "0" + seconds1 : seconds1;
+
+            hours2 = parseInt(timer / 3600, 10);
+            minutes2 = parseInt((timer % 3600) / 60, 10);
+            seconds2 = parseInt(timer % 60, 10);
+
+            hoursSpan2.textContent = hours2 < 10 ? "0" + hours2 : hours2;
+            minutesSpan2.textContent = minutes2 < 10 ? "0" + minutes2 : minutes2;
+            secondsSpan2.textContent = seconds2 < 10 ? "0" + seconds2 : seconds2;
+
 
             if (--timer < 0) {
                 $interval.cancel(intervalPromise);
-                hoursSpan.textContent = "00";
-                minutesSpan.textContent = "00";
-                secondsSpan.textContent = "00";
+                hoursSpan1.textContent = "00";
+                minutesSpan1.textContent = "00";
+                secondsSpan1.textContent = "00";
+
+                hoursSpan2.textContent = "00";
+                minutesSpan2.textContent = "00";
+                secondsSpan2.textContent = "00";
                 $scope.forceSubmitExam(); //Auto Submit
             }
 
@@ -744,7 +763,7 @@ angular.module('attemptExamApp', ['ngCookies'])
     $scope.submitExamConfirmation = function() {
         bootbox.confirm({
                 title: "<p style='color: red; font-size: 24px; margin: 0; font-weight: bold;'>Confirm Submission</p>",
-                message: "<p style='color: #444; font-size: 18px; font-weight: 300; line-height: 28px;'>The exam will be ended immediately if you proceed. Once submitted, you will not able to take the same test in next 48 hours. Do you really want to continue?<br><br><b>Note: If you want, you can take a break,but timer will not pause.</b></p>",
+                message: "<p style='color: #444; font-size: 18px; font-weight: 300; line-height: 28px;'>If you proceed, the exam will end immediately. Once submitted, you won’t be able to retake this test for the next 48 hours. Are you sure you want to continue submitting the exam?<br><br><b>Note: You can take a break if needed, but the timer will keep running.</b></p>",
                 buttons: {
                     cancel: {
                         label: "Continue Exam",
@@ -803,6 +822,7 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
     function renderExamCompleteScreen(reportURL) {
+        $scope.examDetailsFound = false;
         clearAllExamRelatedStorage();
         document.getElementById("examCompletedBanner").style.display = 'flex';
         document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
