@@ -570,6 +570,10 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.startCountdown();
     }
 
+    function renderExamCompleteScreen(reportURL) {
+        document.getElementById("examCompletedBanner").style.display = 'flex';
+        document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
+    }
 
     $scope.saveExamProgress = function(endExamFlag) { //Note: also auto-save every 30s
 
@@ -631,8 +635,7 @@ angular.module('attemptExamApp', ['ngCookies'])
          .then(function(response) {
             if(response.data.status == "success"){
                 if(response.data.data.submitted) { //The exam got submitted
-                    var redirectURL = response.data.data.reportURL;
-                    location.replace(redirectUrl);
+                    renderExamCompleteScreen();
                 }
             } else {
                 console.log('failed to save');

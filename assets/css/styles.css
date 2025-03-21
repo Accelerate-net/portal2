@@ -31332,3 +31332,122 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     background-color: rgb(10 145 144);
     color: #FFF;
 }
+
+/* Main container for the banner */
+.examBannerPopup {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3f3f3;
+    margin: 0;
+}
+
+/* Content box inside the banner */
+.examBannerPopup-content {
+    background-color: #0a877c;
+    color: white;
+    padding: 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    max-width: 600px;
+    text-align: left;
+    margin: 20px;
+
+}
+
+/* Title inside the content box */
+.examBannerPopup-title {
+    font-size: 180%;
+    color: #FFF;
+    font-weight: bold;
+}
+
+/* Base button styles */
+.examBannerPopup-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Primary button (See Performance) */
+.examBannerPopup-button-primary {
+    background-color: #2f7871;
+    color: #fff;
+    float: right;
+}
+
+.examBannerPopup-content p {
+  font-weight: 300 !important;
+}
+
+.examBannerPopup-button-primary:hover {
+    background-color: #1f5a55;
+}
+
+/* Secondary button (Check Later) */
+.examBannerPopup-button-secondary {
+    background-color: white;
+    color: #4a4a4a;
+}
+
+.examBannerPopup-button-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+
+/* Main container for the error banner */
+.examErrorBannerPopup {
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+    margin: 0;
+}
+
+/* Content box inside the error banner */
+.examErrorBannerPopup-content {
+    background-color: #4a4a4a;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    margin: 30px;
+    max-width: 600px;
+}
+
+.examErrorBannerPopup-content p {
+  font-weight: 300 !important;
+}
+
+/* Title inside the content box */
+.examErrorBannerPopup-title {
+    font-size: 180%;
+    font-weight: bold;
+    color: #f2857d !important;
+}
+
+/* Button styles */
+.examErrorBannerPopup-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #4a4a4a;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.examErrorBannerPopup-button:hover {
+    background-color: #e0e0e0;
+}
