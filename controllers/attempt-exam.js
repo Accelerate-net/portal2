@@ -576,7 +576,7 @@ angular.module('attemptExamApp', ['ngCookies'])
         for (let key in timeTrackerData) {
             if (!result.hasOwnProperty(key)) {
                 result[key] = {
-                    t: t,
+                    t: 1,
                     ts: timeTrackerData[key],
                     a: ""
                 };
