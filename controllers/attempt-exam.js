@@ -236,7 +236,7 @@ angular.module('attemptExamApp', ['ngCookies'])
         if((currentToken && currentToken != null && currentToken != '') && currentToken != getExamTokenFromURL()) { //Already another token present
             //Check for last user active time --> more than 30 mins, ask user for confirmation
             var userLastActive = localStorage.getItem("userLastActiveTime") ? localStorage.getItem("userLastActiveTime") : 0;
-            var currentTime = Math.floor(new Date().getTime() / 1000;
+            var currentTime = Math.floor(new Date().getTime() / 1000);
             if(currentTime - userLastActive > 1) {
                 //User has been inactive on the other exam, ask user to clear the cache
                 $scope.getExamCacheClearConfirmation(currentToken);
