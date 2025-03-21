@@ -31341,6 +31341,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     height: 100vh;
     background-color: #f3f3f3;
     margin: 0;
+    z-index: 1000;
 }
 
 /* Content box inside the banner */
@@ -31410,6 +31411,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     height: 100vh;
     background-color: #fff;
     margin: 0;
+    z-index: 1000;
 }
 
 /* Content box inside the error banner */

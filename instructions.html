@@ -109,7 +109,7 @@
                                         </label>
                                         <hr>
                                         <div class="text-center">
-                                            <button onclick="check_instruction('1')" class="btn btn-proceed"><i class="fas fa-arrow-right"></i> Proceed</button>
+                                            <button id="proceedButton" onclick="check_instruction('1')" class="btn btn-proceed"><i class="fas fa-arrow-right"></i> Proceed</button>
                                         </div>
                                     </div>
 
@@ -151,6 +151,32 @@
             return "Bearer " + decodeURIComponent(urlParams.get('token'));
         }
 
+        // Remove exam specific keys from localStorage    
+        function unsetExamMandatoryData() {
+            localStorage.removeItem("currentSectionOpen");
+            localStorage.removeItem("questionTimeTracker");
+            localStorage.removeItem("examSubmissionData");
+            localStorage.removeItem("userLastActiveTime");
+        }
+
+        function isExamDataPresent() {
+            var isStaleData = false;
+            var isExamPresent = (
+                localStorage.getItem("currentSectionOpen") !== null ||
+                localStorage.getItem("questionTimeTracker") !== null ||
+                localStorage.getItem("examSubmissionData") !== null ||
+                localStorage.getItem("userLastActiveTime") !== null
+            );
+
+            var currentEpoch = new Date().getTime();
+            var userLastActive = localStorage.getItem("userLastActiveTime") ? localStorage.getItem("userLastActiveTime") : 0;
+            
+            //User activity not found, or older than 6 hrs. Safe to delete.
+            isStaleData = userLastActive == 0 || (currentEpoch - userLastActive > 21600); 
+
+            return isExamPresent && !isStaleData;
+        }
+
         function renderCustomContent() {
             const urlParams = new URLSearchParams(window.location.search);
             const metadataPassed = urlParams.get('metadata');
@@ -159,6 +185,13 @@
             document.getElementById("examName1").innerHTML = customData["title"];
             document.getElementById("examDuration").innerHTML = customData["duration"] + " mins";
             document.getElementById("specialTerms").innerHTML = customData["specialTerms"];
+
+            if(isExamDataPresent()) {
+                document.getElementById("proceedButton").style.display = 'none';
+                setTimeout(function() {
+                    alert("ERROR: You cannot open multiple exam windows in the same browser. Please submit any ongoing exam before starting a new one.");
+                }, 100);
+            }
         }
 
         renderCustomContent();
@@ -200,8 +233,13 @@
 
             $.ajax(startExamRequest).done(function (startExamResponse) {
                 if(startExamResponse.status == "success") {
+
+                    //clean up localstorage
+                    unsetExamMandatoryData();
+
                     var redirectUrl = startExamResponse.data.url;
                     location.replace(redirectUrl);
+                
                 } else {
                     alert(startExamResponse.message || startExamResponse.error);
                 }

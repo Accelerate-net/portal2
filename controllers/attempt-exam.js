@@ -199,6 +199,7 @@ angular.module('attemptExamApp', ['ngCookies'])
          })
          .then(function(response) {
             if(response.data.status == "success"){
+                
                 $scope.examDetails = response.data.data;
                 $scope.examDetailsFound = true;
                 $scope.examMetadata = response.data.metadata;
@@ -448,6 +449,9 @@ angular.module('attemptExamApp', ['ngCookies'])
 
             $scope.trackIndividualQuestionTime();
 
+            //Track user last active time (to manage exam data)
+            localStorage.setItem("userLastActiveTime", new Date().getTime());
+
 
             //Update overall counter
             hours = parseInt(timer / 3600, 10);
@@ -571,6 +575,13 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
     function renderExamCompleteScreen(reportURL) {
+        //Clear exam related data
+        localStorage.removeItem("currentSectionOpen");
+        localStorage.removeItem("questionTimeTracker");
+        localStorage.removeItem("examSubmissionData");
+        localStorage.removeItem("userLastActiveTime");
+        
+
         document.getElementById("examCompletedBanner").style.display = 'flex';
         document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
     }
