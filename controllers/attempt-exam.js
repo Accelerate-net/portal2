@@ -150,7 +150,7 @@ angular.module('attemptExamApp', ['ngCookies'])
     //Currently opened Question and Section (use for seeking thru Questions only)
     $scope.currentOpenQuestion = 0;
     $scope.currentOpenSection = 0;
-    $scope.moveQuestionRight = function() {
+    $scope.moveQuestionRight = function(source) {
         if($scope.currentOpenQuestion < 1 || $scope.currentOpenSection < 1) {
             return;
         }
@@ -178,9 +178,24 @@ angular.module('attemptExamApp', ['ngCookies'])
         }
 
         $scope.loadSectionWithQuestion(nextSection, nextQuestion);
+
+
+        // Auto-scroll without Y-axis movement
+        setTimeout(() => {
+            let container = document.querySelector(".sectionSeekerContainer");
+            let activeButton = container?.querySelector(".questionSectionButtonActive");
+
+            if (activeButton) {
+                activeButton.scrollIntoView({ 
+                    behavior: "smooth", 
+                    inline: "center",  // Ensures horizontal centering
+                    block: "nearest"   // Prevents unnecessary vertical scrolling
+                });
+            }
+        }, 100);
     }
 
-    $scope.moveQuestionLeft = function() {
+    $scope.moveQuestionLeft = function(source) {
         if($scope.currentOpenQuestion < 1 || $scope.currentOpenSection < 1) {
             return;
         }
@@ -208,6 +223,23 @@ angular.module('attemptExamApp', ['ngCookies'])
         }
 
         $scope.loadSectionWithQuestion(nextSection, nextQuestion);
+
+
+        // Auto-scroll without Y-axis movement
+        setTimeout(() => {
+            let container = document.querySelector(".sectionSeekerContainer");
+            let activeButton = container?.querySelector(".questionSectionButtonActive");
+
+            if (activeButton) {
+                activeButton.scrollIntoView({ 
+                    behavior: "smooth", 
+                    inline: "center",  
+                    block: "nearest"  
+                });
+            }
+        }, 100);
+
+
     }
 
     $scope.loadSectionWithQuestion = function(sectionId, questionId) {
@@ -988,7 +1020,7 @@ angular.module('attemptExamApp', ['ngCookies'])
          .then(function(response) {
             if(response.data.status == "success"){
                 if(response.data.data.submitted) { //The exam got submitted
-                    renderExamCompleteScreen();
+                    renderExamCompleteScreen(response.data.data.reportURL);
                 }
             } else {
                 console.log('failed to save');
