@@ -157,6 +157,7 @@
             localStorage.removeItem("questionTimeTracker");
             localStorage.removeItem("examSubmissionData");
             localStorage.removeItem("userLastActiveTime");
+            localStorage.removeItem("crisprMockTestToken");
         }
 
         function isExamDataPresent() {
@@ -165,7 +166,8 @@
                 localStorage.getItem("currentSectionOpen") !== null ||
                 localStorage.getItem("questionTimeTracker") !== null ||
                 localStorage.getItem("examSubmissionData") !== null ||
-                localStorage.getItem("userLastActiveTime") !== null
+                localStorage.getItem("userLastActiveTime") !== null ||
+                localStorage.getItem("crisprMockTestToken") !== null
             );
 
             var currentEpoch = Math.floor(new Date().getTime() / 1000);

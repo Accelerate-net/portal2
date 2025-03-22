@@ -296,8 +296,8 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
 
-
-
+    //To kill them in the end
+    $scope.allRunningTimers = [];
 
     $scope.loadSection = function(sectionId) {
         $scope.loadSectionWithQuestion(sectionId, 1); // Load the first question of the section
@@ -779,7 +779,7 @@ angular.module('attemptExamApp', ['ngCookies'])
         const secondsSpan2 = display2.querySelector('.seconds');
         const colons2 = display2.querySelectorAll('.blink');
         
-        var intervalPromise = $interval(function() {
+        var examTimeTickerTimer = $interval(function() {
             //Calculate Current Questions Progress
             $scope.currentQuestionKey = $scope.displayingQuestion.questionDisplayKey;
             var currentStampData = localStorage.getItem("questionTimeTracker") ? JSON.parse(localStorage.getItem("questionTimeTracker")) : {};
@@ -815,7 +815,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
             if (--timer < 0) {
-                $interval.cancel(intervalPromise);
+                $interval.cancel(examTimeTickerTimer);
                 hoursSpan1.textContent = "00";
                 minutesSpan1.textContent = "00";
                 secondsSpan1.textContent = "00";
@@ -840,6 +840,8 @@ angular.module('attemptExamApp', ['ngCookies'])
             }
 
         }, 1000);
+
+        $scope.allRunningTimers.push(examTimeTickerTimer);
     }
 
 
@@ -950,10 +952,16 @@ angular.module('attemptExamApp', ['ngCookies'])
         localStorage.removeItem("questionTimeTracker");
         localStorage.removeItem("examSubmissionData");
         localStorage.removeItem("userLastActiveTime");
-        localStorage.removeItem("crisprMockTestToken");   
+        localStorage.removeItem("crisprMockTestToken"); 
     }
 
     function renderExamCompleteScreen(reportURL) {
+        //Kill all the running timers
+        angular.forEach($scope.allRunningTimers, function(timer) {
+            $interval.cancel(timer);
+        });
+        $scope.allRunningTimers = [];
+
         $scope.examDetailsFound = false;
         clearAllExamRelatedStorage();
         document.getElementById("examCompletedBanner").style.display = 'flex';
@@ -1030,10 +1038,12 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
 
-    var autoSave = $interval(function() {
+    var autoSaveTimer = $interval(function() {
         if(isValidExamFound()) { //save if exam found only
             $scope.saveExamProgress();
         }
     }, 10000);
+
+    $scope.allRunningTimers.push(autoSaveTimer);
 
 });
