@@ -31606,6 +31606,46 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
   }
 }
 
+.up-arrow-scroll {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid black; /* Change color as needed */
+}
+
+.down-arrow-scroll {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid black; /* Change color as needed */
+}
+
+
+.question-scroll-buttons {
+    display: flex;
+    top: 25vh;
+    right: 15px;
+    flex-direction: column;
+    gap: 5px;
+    position: absolute;
+    bottom: 10px;
+    opacity: 0.3 !important;
+}
+
+.question-scroll-buttons:focus, .question-scroll-buttons:hover, .question-scroll-buttons:active {
+  opacity: 1 !important;
+}
+
+.question-scroll-buttons button {
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+
 .showOnlyInMobile {
   display: none !important;
 }

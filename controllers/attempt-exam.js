@@ -146,10 +146,58 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     $scope.scrollQuestionByPercentage = function(percentage) {
+        let img = document.getElementById("questionAttemptImageContent");
         let div = document.getElementById("questionAttemptImageDisplayUnit");
         let scrollAmount = div.scrollHeight * (percentage / 100);
+        img.style.transform = `translateY(0px)`;
+
         div.scrollBy({ top: scrollAmount, behavior: "smooth" });
     }
+
+
+    $scope.questionScrollButtonsVisible = false;
+    $scope.showQuestionScrollButtons = function() {
+        let img = document.getElementById("questionAttemptImageContent");
+        let container = document.getElementById("questionAttemptImageDisplayUnit");
+        if (!img || !container) return;
+
+        setTimeout(() => {
+            if (img.clientHeight > container.clientHeight) {
+                $scope.questionScrollButtonsVisible = true;
+            } else {
+                $scope.questionScrollButtonsVisible = false;
+            }
+        }, 100);
+    }
+
+    $scope.scrollQuestionImageFromButton = function(amount) {
+        // let img = document.getElementById("questionAttemptImageDisplayUnit");
+        // img.style.transform = `translateY(${(parseInt(img.dataset.scroll || 0) + amount)}px)`;
+        // img.dataset.scroll = parseInt(img.dataset.scroll || 0) + amount;
+    
+
+        let img = document.getElementById("questionAttemptImageContent");
+        let container = document.getElementById("questionAttemptImageDisplayUnit");
+        if (!img || !container) return;
+
+        
+
+        let maxScrollUp = 0;  // Top limit (no scroll beyond this)
+        let maxScrollDown = container.clientHeight - img.clientHeight;  // Bottom limit
+
+        let currentScroll = parseInt(img.dataset.scroll || 0);
+        let newScroll = currentScroll + amount;
+
+        // Prevent over-scrolling
+        if (newScroll > maxScrollUp) newScroll = maxScrollUp;
+        if (newScroll < maxScrollDown) newScroll = maxScrollDown;
+
+        img.style.transform = `translateY(${newScroll}px)`;
+        img.dataset.scroll = newScroll;
+    }
+
+
+
 
     //Currently opened Question and Section (use for seeking thru Questions only)
     $scope.currentOpenQuestion = 0;
@@ -276,6 +324,7 @@ angular.module('attemptExamApp', ['ngCookies'])
         window.history.pushState({}, '', url);
 
         $scope.scrollQuestionByPercentage(0); //Set image to original place
+        $scope.showQuestionScrollButtons(); //Enable scroll image buttons
     }
 
     // $scope.loadSection = function(sectionId) {
