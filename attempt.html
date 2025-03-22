@@ -160,7 +160,7 @@
 					</div>
 				</li>
 
-				<li class="toolbar-trigger toolbar-icon-bg" id="trigger-sidebar" ng-show="!minimumDistractions">
+				<li class="toolbar-trigger toolbar-icon-bg hiddenInMobile" id="trigger-sidebar" ng-show="!minimumDistractions">
 					<a data-toggle="tooltips" data-placement="right" title="See Intelligent Insights">
 						<span class="icon-bg smartViewIconTop">
 							<i class="ti ti-dashboard smartViewIconTopColor"></i>
@@ -205,8 +205,7 @@
 												<!-- Show only in Mobile -->
 												<div class="clearfix showOnlyInMobile">
 													<h3 class="examQuestionTitle pull-left">Question {{displayingQuestion.number}}
-														<br>
-														<span>MCQ | Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
+														<span style="display: block; padding-top: 5px;">MCQ | Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
 													</h3>
 													<div class="pull-right">
 														<span class="btn btn-lg btn-default pull-right" ng-click="moveQuestionRight()" style="margin: 0 0 0 5px;"><i class="ti ti-angle-right"></i></span>
@@ -426,7 +425,7 @@
 				    <iframe src="calculator-widget/calculator.html" width="463" height="303" style="border: none;"></iframe>
 				</div>
 
-                <div class="static-sidebar-wrapper sidebar-default sidebarInExamView" ng-show="!minimumDistractions">
+                <div class="static-sidebar-wrapper sidebar-default sidebarInExamView hiddenInMobile" ng-show="!minimumDistractions">
                     <div class="static-sidebar">
                         <div class="sidebar">
 
