@@ -87,7 +87,7 @@
 				
 
 				<li class="dropdown toolbar-icon-bg" ng-show="1==1">
-					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-layout-grid3"></i></span><span class="badge" style="background: #512e90">{{getNumberOfQuestionsForReviewInCurrentSection(currentSection)}}</span></a>
+					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-layout-grid3"></i></span><span class="badge" style="background: #512e90">{{getNumberOfQuestionsForReviewInCurrentSection()}}</span></a>
 
 
 
@@ -191,7 +191,7 @@
 										<div class="col-md-9">
 											<div class="panel panel-inbox-read">
 												<div class="panel-body">
-													<div class="inbox-mail-heading">
+													<div class="inbox-mail-heading questionRenderWindow">
 														<div class="clearfix">
 
 															<div class="sectionSeekerContainer pull-left">
@@ -205,16 +205,30 @@
 										                        <button class="btn btn-lg btn-default" ng-click="moveSectionRight()" style="margin-left: 5px;"><i class="ti ti-angle-right"></i></button>
 														    </div>
 
-														    <div class="pull-right">
+														    <div class="pull-right calculatorContainerWeb">
 														    	<button class="btn btn-warning pull-right" id="show-calculator-button" style="font-size: 12px; font-weight: 400; text-transform: none; margin-top: 5px; margin-right: 5px;"><i class="ti ti-tablet" style="margin-right: 5px"></i>Calculator</button>
 														    </div>
 														</div>
 													</div>
 
 
+												<!-- Show only in Mobile -->
+												<div class="clearfix showOnlyInMobile">
+													<h3 class="examQuestionTitle pull-left">Question {{displayingQuestion.number}}
+														<br>
+														<span>MCQ | Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
+													</h3>
+													<div class="pull-right">
+														<span class="btn btn-lg btn-default pull-right" ng-click="moveQuestionRight()" style="margin: 0 0 0 5px;"><i class="ti ti-angle-right"></i></span>
+
+														<span class="btn btn-lg btn-default pull-right" ng-click="moveQuestionLeft()"><i class="ti ti-angle-left"></i></span>
+													</div>
+												</div>
+
+
 												<!-- MINIMUM DISTRACTED VIEW -->
 												<div ng-show="minimumDistractions">
-													<div class="clearfix">
+													<div class="clearfix hiddenInMobile">
 														<h3 class="examQuestionTitle pull-left">Question {{displayingQuestion.number}}</h3>
 														<span class="pull-right">MCQ | Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
 													</div>
@@ -223,14 +237,14 @@
 
 												<!-- DEFAULT VIEW -->
 												<div ng-show="!minimumDistractions">
-													<div class="clearfix">
+													<div class="clearfix hiddenInMobile">
 														<h4 class="inbox-read-title pull-left">Question Type: <b>MCQ</b></h4>
 														<span class="pull-right">Marks for Correct Answer: <b style="color: green">4</b>  |  Negative Marks: <b style="color: red;">1</b></span>
 													</div>
 
-													<hr class="mb10">
+													<hr class="mb10 hiddenInMobile">
 
-													<div class="inbox-read-details clearfix">
+													<div class="inbox-read-details clearfix hiddenInMobile">
 														<div class="pull-left">
 															<h3 class="examQuestionTitle">
 																<span>Question {{displayingQuestion.number}}</span>
@@ -276,7 +290,7 @@
 														</div>
 														<div class="questionAttemptOptions">
 															<div class="row" style="padding: 0 10px;">
-																<div class="col-md-3">
+																<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'A'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'A')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'A'"> 
@@ -284,7 +298,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-3">
+																<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'B'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'B')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'B'"> 
@@ -292,7 +306,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-3">
+																<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'C'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'C')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'C'"> 
@@ -300,7 +314,7 @@
 																		</label>
 																	</div>
 																</div>
-																<div class="col-md-3">
+																<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
 																	<div class="radio block questionOptionBlock" ng-class="{'questionOptionSelected': displayingQuestion.answer == 'D'}" ng-click="submitCurrentQuestionAnswer(displayingQuestion.questionDisplayKey, 'D')">
 																		<label class="questionOptionLabel">
 																			<input type="radio" style="position: relative;" ng-model="displayingQuestion.answer" ng-value="'D'"> 
@@ -311,15 +325,20 @@
 															</div>
 														</div>
 													</div>
-													<hr>
 													<div class="msg-attachments row" style="margin: 0" id="examResponseButtonsHolder">
 														<div class="row">
-															<div class="col-md-9">
-																<button ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-default btn-lg centerMobileButton">Mark for Review & Next</button>
-																<button ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-default btn-lg centerMobileButton">Clear Response</button>
+															<div class="col-md-8">
+																<span ng-click="markForReviewAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)" class="btn btn-default btn-lg centerMobileButton">Mark for Review & Next</span>
+																<span ng-click="clearResponseForQuestion(displayingQuestion.questionDisplayKey)" class="btn btn-default btn-lg centerMobileButton">Clear Response</span>
 															</div>
-															<div class="col-md-3">
-																<button class="btn btn-primary btn-lg pull-right centerMobileButton" ng-click="saveAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)">Save & Next</button>
+															<div class="col-md-4">
+
+																<span class="btn btn-primary btn-lg pull-right centerMobileButton" ng-click="saveAndNext(displayingQuestion.sectionId, displayingQuestion.number, displayingQuestion.questionDisplayKey, displayingQuestion.answer)">Save & Next</span>
+																
+																<span class="btn btn-lg btn-default pull-right hiddenInMobile" ng-click="moveQuestionRight()" style="margin: 0 15px 0 5px;"><i class="ti ti-angle-right"></i></span>
+
+																<span class="btn btn-lg btn-default pull-right hiddenInMobile" ng-click="moveQuestionLeft()"><i class="ti ti-angle-left"></i></span>
+																
 															</div>
 														</div>
 													</div>
@@ -394,6 +413,8 @@
                             </div> <!-- .container-fluid -->
                         </div> <!-- #page-content -->
                     </div>
+
+					<!-- 
                     <footer role="contentinfo" ng-show="!minimumDistractions">
 					    <div class="clearfix">
 					        <ul class="list-unstyled list-inline pull-left">
@@ -401,6 +422,7 @@
 					        </ul>
 					    </div>
 					</footer>
+					-->
                 </div>
 
 				<!-- Calculator -->
@@ -542,16 +564,16 @@
             title.style.opacity = "0";
             timeouts.push(setTimeout(() => {
                 logo.style.opacity = "0";
-                timeouts.push(setTimeout(showTitle, 1000)); // Wait for fade-out
-            }, 3000));
+                timeouts.push(setTimeout(showTitle, 500)); // Wait for fade-out
+            }, 10000));
         }
 
         function showTitle() {
             title.style.opacity = "1";
             timeouts.push(setTimeout(() => {
                 title.style.opacity = "0";
-                timeouts.push(setTimeout(showLogo, 1000)); // Wait for fade-out
-            }, 3000));
+                timeouts.push(setTimeout(showLogo, 500)); // Wait for fade-out
+            }, 10000));
         }
 
         showLogo(); // Start animation cycle

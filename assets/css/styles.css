@@ -30539,13 +30539,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 
 .examNavigation .questionAnswered {
-  background-image: url(https://student-cms.classplusapp.com/static/media/answered.dc0ff0ae.svg);
+  background-image: url(../icons/exam-palette-answered.svg);
   background-repeat: no-repeat;
   background-size: 100%;
 }
 
 .examNavigation .questionNotAnswered {
-  background-image: url(https://student-cms.classplusapp.com/static/media/notanswerd.2ba7912b.svg);
+  background-image: url(../icons/exam-palette-not-answered.svg);
   background-repeat: no-repeat;
   background-size: 100%;
 }
@@ -30558,13 +30558,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 
 .examNavigation .markedForRevew {
-  background-image: url(data:image/png;base64,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);
+  background-image: url(../icons/exam-palette-for-review.svg);
   background-repeat: no-repeat;
   background-size: 100%;
 }
 
 .examNavigation .answeredAndMarkedForRevew {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADNUlEQVR4nO2ZzU8TQRjGJ6hRLyIqM2hQWkpLqwH8oLWziL161YSDXozGmKiBmQLycXEVmiKllRYqhYsxMfEgSDAxmBg8aETDkfIP+JEQ1OjRQhTGTK2Gpa3t0naXNX2SN+lhP37P9J3Zd94BIK+88sqCxAI7ctowoh0Y0TEBkTCG9JsAyRKP6G9EwgIko/wafi2/B6it+j10L0bUhSH5ICDK5ASG9D2/lz9DcfATB64UCZAGMCQRueDxRkiEP8tRSHYqAl9XTM4IkHzKFDxBLPBn5wy8ATRs4iOVA3AmDeLn78oqvKNM3CYgMp57ePrHxDh/ZxZHnowqB09/zw1EnziAuDljA8qkDU0W/ZlPWPXgmYDoih06T68L/lhReyFGZF5lA4yvTnzZlm0AQzKwAeBZNCANyIK3FreWCJB8Vx0crfrY7b62L/3RR9SlNrSw1gSirjTxxQJep6gNLMSlEXmXVgHIK0XVYVGSKKG1KQ3UIdKpOihKGm3p5P/YBgBlidOIPkppQIB0TnVQlCxIOA0D5Kv6oDRhYEi+pGNgaeMaoIuaMoBLnUw3E/ob+tdDTFMpZDe1SA1MBZc1NYlrT3ZIDFQ8DkQ0tYzWXLwlMVB5z/dRUx+yypBXYsDs7Z3UTClhL2uOTtrVBg7ecJ/XTDFXc+GmBL58cvAHENPcI6tdTuP9TmZ4NihNn4G+aaCVDU311S4JvG56iJmvu44CLXQjaus743LfHOybBXJl29W4Q+lNvd3YwgxPB6S5/yK4XNUhloMM2iorSsAft7Qy40O/NHVmQszS0+sDmYj3KnMNb7W2xY189MM17JWfOkq2FnGpk1U3dTP9q7tx8MYHdz47xCz1R09VNG7NZnMX65rZ4XMiM0zEj3oMfqGqp0d+MyvlP4Fo/3rmBNY3M5utnR05KzKLx5NwxHWxMI14w3afbzvIlXivkrf75BhIBqtbs9qYb3v8QAnx4yA5R0z/hH8TYqZh71y1220CSosf0AmIdqeqnRKB66eCPysHPW/NbjcG6ksswCVNVoxIe2zFmo3u7GLHrPqXwRXDhH/ReN83bwl4nh/q6r0ELo9sUZs6r7zAf6BfK98hFBNlA7IAAAAASUVORK5CYII=);
+  background-image: url(../icons/exam-palette-answered-for-review.svg);
   background-repeat: no-repeat;
   background-size: 100%;
 }
@@ -31155,7 +31155,7 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     left: 0;
     width: 0%;
     height: 100%;
-    background-color: #4caf50; /* Fill color */
+    background-color: #52b062; /* Fill color */
     z-index: 1;
     transition: width 5s linear; /* Animation duration */
 }
@@ -31574,6 +31574,42 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
   margin: 0 0 10px 0;
 }
 
+
+
+/* Question Image Height */
+
+.questionAttemptImage {
+  height: 40vh;
+  overflow: auto;
+}
+
+.questionAttemptImage {
+  height: 40vh; /* Default for >= 576px */
+  overflow: auto;
+}
+
+@media (max-width: 575px) {
+  .questionAttemptImage {
+    height: 30vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .questionAttemptImage {
+    height: 50vh;
+  }
+}
+
+@media (min-width: 992px) {
+  .questionAttemptImage {
+    height: 50vh;
+  }
+}
+
+.showOnlyInMobile {
+  display: none;
+}
+
 @media (max-width: 991px) {
     .examTitleHeader {
         opacity: 0;
@@ -31618,6 +31654,36 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
       display: none !important;
     }
 
+    .calculatorContainerWeb {
+      display: none !important;
+    }
+
+    .sectionSeekerContainer {
+      max-width: 100% !important;
+    }
+
+    .hiddenInMobile {
+      display: none !important;
+    }
+
+    .showOnlyInMobile {
+      display: block !important;
+    }
+
+    .questionRenderWindow {
+      margin-bottom: 5px !important;
+    }
+
+    .examQuestionTitle {
+      margin: 5px !important;
+    }
+
+    .examQuestionTitle span {
+      position: absolute;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
 }
 
 @media (max-width: 640px) {
@@ -31655,16 +31721,17 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
     color: white;
     font-weight: bold;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .newView_questionAnswered {
-    background-image: url(https://student-cms.classplusapp.com/static/media/answered.dc0ff0ae.svg);
+    background-image: url(../icons/exam-palette-answered.svg);
     background-repeat: no-repeat;
     background-size: 100%;
 }
 
 .newView_questionNotAnswered {
-    background-image: url(https://student-cms.classplusapp.com/static/media/notanswerd.2ba7912b.svg);
+    background-image: url(../icons/exam-palette-not-answered.svg);
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -31677,13 +31744,13 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 }
 
 .newView_markedForReview {
-    background-image: url(data:image/png;base64,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);
+    background-image: url(../icons/exam-palette-for-review.svg);
     background-repeat: no-repeat;
     background-size: 100%;
 }
 
 .newView_answeredAndMarkedForReview {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADNUlEQVR4nO2ZzU8TQRjGJ6hRLyIqM2hQWkpLqwH8oLWziL161YSDXozGmKiBmQLycXEVmiKllRYqhYsxMfEgSDAxmBg8aETDkfIP+JEQ1OjRQhTGTK2Gpa3t0naXNX2SN+lhP37P9J3Zd94BIK+88sqCxAI7ctowoh0Y0TEBkTCG9JsAyRKP6G9EwgIko/wafi2/B6it+j10L0bUhSH5ICDK5ASG9D2/lz9DcfATB64UCZAGMCQRueDxRkiEP8tRSHYqAl9XTM4IkHzKFDxBLPBn5wy8ATRs4iOVA3AmDeLn78oqvKNM3CYgMp57ePrHxDh/ZxZHnowqB09/zw1EnziAuDljA8qkDU0W/ZlPWPXgmYDoih06T68L/lhReyFGZF5lA4yvTnzZlm0AQzKwAeBZNCANyIK3FreWCJB8Vx0crfrY7b62L/3RR9SlNrSw1gSirjTxxQJep6gNLMSlEXmXVgHIK0XVYVGSKKG1KQ3UIdKpOihKGm3p5P/YBgBlidOIPkppQIB0TnVQlCxIOA0D5Kv6oDRhYEi+pGNgaeMaoIuaMoBLnUw3E/ob+tdDTFMpZDe1SA1MBZc1NYlrT3ZIDFQ8DkQ0tYzWXLwlMVB5z/dRUx+yypBXYsDs7Z3UTClhL2uOTtrVBg7ecJ/XTDFXc+GmBL58cvAHENPcI6tdTuP9TmZ4NihNn4G+aaCVDU311S4JvG56iJmvu44CLXQjaus743LfHOybBXJl29W4Q+lNvd3YwgxPB6S5/yK4XNUhloMM2iorSsAft7Qy40O/NHVmQszS0+sDmYj3KnMNb7W2xY189MM17JWfOkq2FnGpk1U3dTP9q7tx8MYHdz47xCz1R09VNG7NZnMX65rZ4XMiM0zEj3oMfqGqp0d+MyvlP4Fo/3rmBNY3M5utnR05KzKLx5NwxHWxMI14w3afbzvIlXivkrf75BhIBqtbs9qYb3v8QAnx4yA5R0z/hH8TYqZh71y1220CSosf0AmIdqeqnROD6qeDPykGPW7PbjYH6EgtwSZMVIdIeW7Fmozu72DGr/mVwxTDhXzTe981bAp7nh7p6L4HLI1vUps4rL/Af6NfKdwjFRNmAbIAAAAASUVORK5CYII=);
+    background-image: url(../icons/exam-palette-answered-for-review.svg);
     background-repeat: no-repeat;
     background-size: 100%;
 }
@@ -31696,5 +31763,10 @@ body.sidebar-collapsed .smartViewIconTop .smartViewIconTopColor:hover {
 }
 
 
+.questionAttemptOptions {
+  border-top: 2px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 10px;
+}
 
 

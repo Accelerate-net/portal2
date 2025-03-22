@@ -131,26 +131,84 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
 
-    $scope.getNumberOfQuestionsForReviewInCurrentSection = function(currentSectionData) {
+    $scope.getNumberOfQuestionsForReviewInCurrentSection = function() {
 
-        if(!currentSectionData || !currentSectionData.questions || !$scope.answerDisplayContent)
-            return 0;
-
-        let count = 0;
-        let questionsArray = Array.isArray(currentSectionData.questions)
-            ? currentSectionData.questions
-            : Object.values(currentSectionData.questions);
-
-        questionsArray.forEach(question => {
-            let questionId = question.questionDisplayKey;
-            if ($scope.answerDisplayContent[questionId] && ($scope.answerDisplayContent[questionId].t === 2 || $scope.answerDisplayContent[questionId].t === 3)) {
-                count++;
-            }
+        const counts = {};
+        Object.values($scope.answerDisplayContent).forEach(item => {
+            const tValue = item.t;
+            counts[tValue] = (counts[tValue] || 0) + 1;
         });
 
-        return count;
+        for (let i = 0; i <= 4; i++) {
+            counts[i] = counts[i] || 0;
+        }
+
+        return counts[2] + counts[3];
     }
 
+
+    //Currently opened Question and Section (use for seeking thru Questions only)
+    $scope.currentOpenQuestion = 0;
+    $scope.currentOpenSection = 0;
+    $scope.moveQuestionRight = function() {
+        if($scope.currentOpenQuestion < 1 || $scope.currentOpenSection < 1) {
+            return;
+        }
+
+        var currentSection = $scope.examDetails[$scope.currentOpenSection];
+        if(!currentSection) {
+            return;
+        }
+
+        var questionsInSection = currentSection.questions;
+        if(!questionsInSection || !questionsInSection[$scope.currentOpenQuestion]) {
+            return;
+        }
+
+        var nextSection = $scope.currentOpenSection;
+        var nextQuestion = $scope.currentOpenQuestion + 1;
+        if(nextQuestion > Object.keys(questionsInSection).length) {
+            nextQuestion = 1; //and move to next section
+            nextSection = parseInt(nextSection) + 1;
+
+            var totalSectionsPresent = Object.keys($scope.examDetails).length;
+            if(nextSection > totalSectionsPresent) {
+                return; //Do nothing, last question of the exam
+            }
+        }
+
+        $scope.loadSectionWithQuestion(nextSection, nextQuestion);
+    }
+
+    $scope.moveQuestionLeft = function() {
+        if($scope.currentOpenQuestion < 1 || $scope.currentOpenSection < 1) {
+            return;
+        }
+
+        var currentSection = $scope.examDetails[$scope.currentOpenSection];
+        if(!currentSection) {
+            return;
+        }
+
+        var questionsInSection = currentSection.questions;
+        if(!questionsInSection || !questionsInSection[$scope.currentOpenQuestion]) {
+            return;
+        }
+
+        var nextSection = $scope.currentOpenSection;
+        var nextQuestion = $scope.currentOpenQuestion - 1;
+        if(nextQuestion < 1) {
+            nextSection = parseInt(nextSection) - 1;
+            if(nextSection < 1) {
+                return; //Do nothing, first question of the exam
+            }
+
+            var nextSectionData = $scope.examDetails[nextSection];
+            nextQuestion = Object.keys(nextSectionData.questions).length; //move to prev sections last question
+        }
+
+        $scope.loadSectionWithQuestion(nextSection, nextQuestion);
+    }
 
     $scope.loadSectionWithQuestion = function(sectionId, questionId) {
         $scope.currentSection = $scope.examDetails[sectionId];
@@ -171,6 +229,9 @@ angular.module('attemptExamApp', ['ngCookies'])
         localStorage.setItem("currentSectionOpen", sectionId);
 
         $scope.displayQuestionFromSection(sectionId, questionId); //First question of the section
+
+        $scope.currentOpenQuestion = questionId;
+        $scope.currentOpenSection = sectionId;
 
         //Update URL param
         const url = new URL(window.location);
@@ -200,6 +261,11 @@ angular.module('attemptExamApp', ['ngCookies'])
     //         currentSection = $scope.sectionDetails.length;
     //     $scope.loadSection(currentSection);
     // }
+
+
+
+
+
 
     $scope.loadSection = function(sectionId) {
         $scope.loadSectionWithQuestion(sectionId, 1); // Load the first question of the section
@@ -844,7 +910,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
             $scope.countdownPromise = $timeout($scope.startCountdown, 1000);
         };
-        
+
 
     //Clear exam related data
     function clearAllExamRelatedStorage() {
