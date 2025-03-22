@@ -833,7 +833,6 @@ angular.module('attemptExamApp', ['ngCookies'])
                     document.getElementById("timerContainer").classList.remove("blinkingRedStopped");
                 }
                 if(hours == 0 && minutes == 0 && seconds < 10) { //less than 10 seconds
-                    console.log('remove')
                     document.getElementById("timerContainer").classList.remove("blinkingRed");
                     document.getElementById("timerContainer").classList.add("blinkingRedStopped");
                 }
