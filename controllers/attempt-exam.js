@@ -982,16 +982,16 @@ angular.module('attemptExamApp', ['ngCookies'])
             document.getElementById("submit-exam-button-1").classList.add("active");
 
             $scope.countdown = 5;
-            $scope.countdownElement.textContent = `Submitting in ${$scope.countdown}s. Click to continue the Exam.`;
+            $scope.countdownElement.textContent = `Click again to Cancel (${$scope.countdown}s)`;
 
             $scope.startCountdown = function() {
                 $scope.countdown--;
 
                 if ($scope.countdown > 0) {
-                    $scope.countdownElement.textContent = `Submitting in ${$scope.countdown}s. Click to continue the Exam.`
+                    $scope.countdownElement.textContent = `Click again to Cancel (${$scope.countdown}s)`
                     $scope.countdownPromise = $timeout($scope.startCountdown, 1000);
                 } else {
-                    $scope.countdownElement.textContent = "Confirming Submission";
+                    $scope.countdownElement.textContent = "Confirm Submission";
                     $scope.submitExamConfirmation();
                 }
             };
