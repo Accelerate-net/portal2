@@ -17,13 +17,6 @@
     <link type="text/css" href="assets/plugins/codeprettifier/prettify.css" rel="stylesheet">                <!-- Code Prettifier -->
     <link type="text/css" href="assets/plugins/iCheck/skins/minimal/blue.css" rel="stylesheet">              <!-- iCheck -->
 
-    <!--[if lt IE 10]>
-        <script type="text/javascript" src="assets/js/media.match.min.js"></script>
-        <script type="text/javascript" src="assets/js/respond.min.js"></script>
-        <script type="text/javascript" src="assets/js/placeholder.min.js"></script>
-    <![endif]-->
-    <!-- The following CSS are included as plugins and can be removed if unused-->
-
       <!-- Controller -->
       <script src="assets/js/jquery.js"></script>
       <script src="assets/js/angular.min.js"></script>
@@ -79,18 +72,15 @@
 		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="ti ti-fullscreen"></i></span></i></a>
 		        </li>
 
-
-
 		        <li class="toolbar-icon-bg hidden-xs" ng-click="toggleMinimumDistractions()"> <!-- hidden-xs will hide on Mobile -->
-		            <a href="#" class="toggle-fullscreen"><span class="icon-bg"><i class="fa fa-eye"></i></span></i></a>
+		            <a href="#" class="toggle-fullscreen">
+		            	<span class="icon-bg"><i class="fa" ng-class="{'fa-eye' : !minimumDistractions, 'fa-eye-slash' : minimumDistractions}"></i></span></i>
+		            </a>
 		        </li>
 				
 
-				<li class="dropdown toolbar-icon-bg" ng-show="1==1">
+				<li class="dropdown toolbar-icon-bg showOnlyInMobile">
 					<a href="#" class="hasnotifications dropdown-toggle" data-toggle='dropdown'><span class="icon-bg"><i class="ti ti-layout-grid3"></i></span><span class="badge" style="background: #512e90">{{getNumberOfQuestionsForReviewInCurrentSection()}}</span></a>
-
-
-
 
 					<div class="dropdown-menu notifications arrow" style="padding: 0">
 						<div class="panel" style="margin: 0 0 10px 0; width: 288px; box-shadow: none;">
@@ -170,7 +160,7 @@
 					</div>
 				</li>
 
-				<li class="toolbar-trigger toolbar-icon-bg" id="trigger-sidebar" ng-show="minimumDistractions">
+				<li class="toolbar-trigger toolbar-icon-bg" id="trigger-sidebar" ng-show="!minimumDistractions">
 					<a data-toggle="tooltips" data-placement="right" title="See Intelligent Insights">
 						<span class="icon-bg smartViewIconTop">
 							<i class="ti ti-dashboard smartViewIconTopColor"></i>
@@ -436,7 +426,7 @@
 				    <iframe src="calculator-widget/calculator.html" width="463" height="303" style="border: none;"></iframe>
 				</div>
 
-                <div class="static-sidebar-wrapper sidebar-default sidebarInExamView">
+                <div class="static-sidebar-wrapper sidebar-default sidebarInExamView" ng-show="!minimumDistractions">
                     <div class="static-sidebar">
                         <div class="sidebar">
 
@@ -450,7 +440,8 @@
 							        </div>
 							        <div class="widget-body" style="margin: 0; padding: 20px;" ng-show="!criprInsightsEnabled">
 							        	<p style="color: #e7e7e7; line-height: 24px; font-weight: 300;">Get real-time insights as you tackle your practice test. A practice exam isn’t just about answering quality questions — it’s about mastering time management and applying smart strategies under pressure. Crispr Insights delivers intelligent feedback during your exam to help you optimize your approach. You can switch it off anytime - if you would prefer distraction-free, real-like mock test experience.</p>
-							        	<button class="btn btn-info btn-sm btn-block" ng-click="toggleCrisprInsights()">Enable Insights</button>
+							        	<span class="btn btn-default btn-sm btn-block">Coming Soon</span> 
+							        	<!-- ng-click="toggleCrisprInsights()" -->
 							        </div>
 							        <div class="widget-body" ng-show="criprInsightsEnabled">
 

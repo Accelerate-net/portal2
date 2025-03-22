@@ -41,9 +41,7 @@ angular.module('attemptExamApp', ['ngCookies'])
 
 
     $scope.toggleMinimumDistractions = function() {
-        var toggleValue = localStorage.getItem("minimumDistractionsEnabled") ? localStorage.getItem("minimumDistractionsEnabled") == 1 : false;
-        $scope.minimumDistractions = !toggleValue;
-        localStorage.setItem("minimumDistractionsEnabled", $scope.minimumDistractions ? 1 : 0);
+        $scope.minimumDistractions = !$scope.minimumDistractions;
     }
 
     $scope.toggleCrisprInsights = function() {
