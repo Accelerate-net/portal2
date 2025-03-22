@@ -145,6 +145,12 @@ angular.module('attemptExamApp', ['ngCookies'])
     }
 
 
+    $scope.scrollQuestionByPercentage = function(percentage) {
+        let div = document.getElementById("questionAttemptImageDisplayUnit");
+        let scrollAmount = div.scrollHeight * (percentage / 100);
+        div.scrollBy({ top: scrollAmount, behavior: "smooth" });
+    }
+
     //Currently opened Question and Section (use for seeking thru Questions only)
     $scope.currentOpenQuestion = 0;
     $scope.currentOpenSection = 0;
@@ -268,6 +274,8 @@ angular.module('attemptExamApp', ['ngCookies'])
         url.searchParams.set("section", sectionId);
         url.searchParams.set("question", questionId);
         window.history.pushState({}, '', url);
+
+        $scope.scrollQuestionByPercentage(0); //Set image to original place
     }
 
     // $scope.loadSection = function(sectionId) {
