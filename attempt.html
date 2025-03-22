@@ -544,63 +544,54 @@
 
 
 <script>
-    let animationInterval = null; // Store the interval ID
-    let timeouts = []; // Track all timeouts to clear when stopping
+	let animationTimeout = null; // Timeout reference
 
-    function clearAllTimeouts() {
-        while (timeouts.length) {
-            clearTimeout(timeouts.pop());
-        }
-    }
+	function clearAnimation() {
+	    clearTimeout(animationTimeout);
+	    animationTimeout = null;
+	}
 
-    function startAnimation() {
-        if (animationInterval) return; // Prevent multiple intervals
+	function startAnimation() {
+	    if (animationTimeout) return; // Prevent multiple instances
 
-        const logo = document.querySelector(".animatedLogoSpace");
-        const title = document.querySelector(".examTitleHeader");
+	    const logo = document.querySelector(".animatedLogoSpace");
+	    const title = document.querySelector(".examTitleHeader");
 
-        function showLogo() {
-            logo.style.opacity = "1";
-            title.style.opacity = "0";
-            timeouts.push(setTimeout(() => {
-                logo.style.opacity = "0";
-                timeouts.push(setTimeout(showTitle, 500)); // Wait for fade-out
-            }, 10000));
-        }
+	    function showLogo() {
+	        logo.style.opacity = "1";
+	        title.style.opacity = "0"; // Hide title
+	        animationTimeout = setTimeout(showTitle, 15000); // Show logo for 15s
+	    }
 
-        function showTitle() {
-            title.style.opacity = "1";
-            timeouts.push(setTimeout(() => {
-                title.style.opacity = "0";
-                timeouts.push(setTimeout(showLogo, 500)); // Wait for fade-out
-            }, 10000));
-        }
+	    function showTitle() {
+	        title.style.opacity = "1";
+	        logo.style.opacity = "0"; // Hide logo
+	        animationTimeout = setTimeout(showLogo, 5000); // Show title for 5s
+	    }
 
-        showLogo(); // Start animation cycle
-        animationInterval = setInterval(showLogo, 8000);
-    }
+	    showLogo(); // Start the cycle
+	}
 
-    function stopAnimation() {
-        clearInterval(animationInterval);
-        animationInterval = null;
-        clearAllTimeouts();
+	function stopAnimation() {
+	    clearAnimation();
 
-        const logo = document.querySelector(".animatedLogoSpace");
-        const title = document.querySelector(".examTitleHeader");
-        logo.style.opacity = "1"; // Ensure elements remain visible
-        title.style.opacity = "1";
-    }
+	    const logo = document.querySelector(".animatedLogoSpace");
+	    const title = document.querySelector(".examTitleHeader");
+	    logo.style.opacity = "1"; // Keep logo visible
+	    title.style.opacity = "1"; // Keep title visible
+	}
 
-    function checkScreenWidth() {
-        if (window.innerWidth < 990) {
-            startAnimation();
-        } else {
-            stopAnimation();
-        }
-    }
+	function checkScreenWidth() {
+	    if (window.innerWidth < 990) {
+	        startAnimation();
+	    } else {
+	        stopAnimation();
+	    }
+	}
 
-    window.addEventListener("load", checkScreenWidth);
-    window.addEventListener("resize", checkScreenWidth);
+	window.addEventListener("load", checkScreenWidth);
+	window.addEventListener("resize", checkScreenWidth);
+
 </script>
 
 
