@@ -47,17 +47,34 @@
                                             <li>Total duration of <span id="examName1"></span> is <span id="examDuration"></span>.</li>
                                             <span id="specialTerms"></span>
                                             <li>The clock will be set at the server. The countdown timer in the top right corner of the screen will display the remaining time available for you to complete the examination.</li>
-                                            <li>
-                                                The Questions Palette displayed on the right side of the screen will show the status of each question using one of the following symbols:
-                                                <ol>
-                                                    <li><img src="/img/QuizIcons/Logo1.png" alt="Not Visited"> You have not visited the question yet.</li>
-                                                    <li><img src="/img/QuizIcons/Logo2.png" alt="Not Answered"> You have not answered the question.</li>
-                                                    <li><img src="/img/QuizIcons/Logo3.png" alt="Answered"> You have answered the question.</li>
-                                                    <li><img src="/img/QuizIcons/Logo4.png" alt="Marked for Review"> You have NOT answered the question, but have marked it for review.</li>
-                                                    <li><img src="/img/QuizIcons/Logo5.png" alt="Answered and Marked for Review"> The question(s) "Answered and Marked for Review" will be considered for evaluation.</li>
-                                                </ol>
-                                            </li>
-                                            <li>Use <img src="/img/QuizIcons/down.png" alt="Down"> to navigate to the bottom and <img src="/img/QuizIcons/up.png" alt="Up"> to navigate to the top of the question area without scrolling.</li>
+
+                                                <li>
+                                                    The Questions Palette displayed on the right side of the screen will show the status of each question using one of the following symbols:
+                                                    <ol>
+                                                        <li class="newView_attemptSummaryTextHolderLi">
+                                                            <span class="newView_square newView_notVisited">0</span>
+                                                            <span class="newView_attemptSummaryText">You have not visited the question yet.</span>
+                                                        </li>
+                                                        <li class="newView_attemptSummaryTextHolderLi">
+                                                            <span class="newView_square newView_questionNotAnswered">0</span>
+                                                            <span class="newView_attemptSummaryText">You have not answered the question.</span>
+                                                        </li>
+                                                        <li class="newView_attemptSummaryTextHolderLi">
+                                                            <span class="newView_square newView_questionAnswered">0</span>
+                                                            <span class="newView_attemptSummaryText">You have answered the question.</span>
+                                                        </li>
+                                                        <li class="newView_attemptSummaryTextHolderLi">
+                                                            <span class="newView_square newView_markedForReview">0</span>
+                                                            <span class="newView_attemptSummaryText">You have NOT answered the question, but have marked it for review.</span>
+                                                        </li>
+                                                        <li class="newView_attemptSummaryTextHolderLi">
+                                                            <span class="newView_square newView_answeredAndMarkedForReview">0</span>
+                                                            <span class="newView_attemptSummaryText">The question(s) "Answered and Marked for Review" will be considered for evaluation.</span>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+
+                                            <li>Use <span class="down-arrow"></span> to navigate to the bottom and <span class="up-arrow"></span> to navigate to the top of the question area without scrolling.</li>
                                         </ol>
 
                                         <h4><strong><u>Navigating to a Question:</u></strong></h4>
