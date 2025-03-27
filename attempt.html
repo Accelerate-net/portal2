@@ -170,8 +170,8 @@
 			</ul>
 		</header>
 
-        <div id="wrapper" ng-show="examDetailsFound">
-            <div id="layout-static">
+        <div id="wrapper">
+            <div id="layout-static" ng-show="examDetailsFound">
 
                 <div class="static-content-wrapper">
                     <div class="static-content">
@@ -278,10 +278,11 @@
 															<div class="questionAttemptImage" style="height: 40vh" id="questionAttemptImageDisplayUnit">
 																<img id="questionAttemptImageContent" ng-src="{{displayingQuestion.url}}" width="80%">
 															</div>
-	<div class="question-scroll-buttons" ng-if="questionScrollButtonsVisible">
-        <button class="btn btn-lg btn-default" id="scrollUp" ng-click="scrollQuestionImageFromButton(50)"><span class="up-arrow-scroll"></span></button>
-        <button class="btn btn-lg btn-default" id="scrollDown" ng-click="scrollQuestionImageFromButton(-50)"><span class="down-arrow-scroll"></span></button>
-    </div>
+
+															<div class="question-scroll-buttons" ng-if="questionScrollButtonsVisible">
+														        <button class="btn btn-lg btn-default" id="scrollUp" ng-click="scrollQuestionImageFromButton(50)"><span class="up-arrow-scroll"></span></button>
+														        <button class="btn btn-lg btn-default" id="scrollDown" ng-click="scrollQuestionImageFromButton(-50)"><span class="down-arrow-scroll"></span></button>
+														    </div>
     													</div>
 
 
