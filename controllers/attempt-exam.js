@@ -25,6 +25,41 @@ angular.module('attemptExamApp', ['ngCookies'])
         return decodeURIComponent(urlParams.get('exam'));
     }
 
+
+
+    let isBootboxVisible = false; // Flag to track modal visibility
+    document.addEventListener("visibilitychange", function() {
+        if (document.hidden && !isBootboxVisible) {
+            isBootboxVisible = true; // Set flag to prevent multiple modals
+
+            bootbox.confirm({
+                title: "<p style='color: #ff9800; font-size: 24px; margin: 0; font-weight: bold;'>Warning!</p>",
+                message: "<p style='color: #444; font-size: 18px; font-weight: 300; line-height: 28px;'>While attempting the test, switching between tabs is strictly prohibited. If you navigate away, it may be considered a violation. Additionally, the timer continues running even if you take a break, and once the allotted time expires, the exam will be auto-submitted. Stay focused to maximize your performance.</p>",
+                buttons: {
+                    cancel: {
+                        label: "Get back to Test",
+                        className: "btn-default"
+                    },
+                    confirm: {
+                        label: "End the Exam",
+                        className: "btn-danger"
+                    }
+                },
+                callback: function (result) {
+                    isBootboxVisible = false; // Reset flag after modal closes
+                    if(result) {
+                        $scope.saveExamProgress('TERMINATE');
+                    } else {
+                        // Continue exam
+                        location.reload();
+                    }
+                }
+            });
+        }
+    });
+
+
+
     //Defaults
     $scope.examDetails = {};
     $scope.examMetadata = {};
@@ -1019,7 +1054,11 @@ angular.module('attemptExamApp', ['ngCookies'])
         $scope.examDetailsFound = false;
         clearAllExamRelatedStorage();
         document.getElementById("examCompletedBanner").style.display = 'flex';
-        document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
+        if(reportURL) {
+            document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.replace('" + reportURL + "')" );
+        } else {
+            document.getElementById("examCompletedBannerReport").setAttribute( "onclick", "window.location.href = 'https://candidate.crisprlearning.com/'" );
+        }
     }
 
     $scope.saveExamProgress = function(endExamFlag) { //Note: also auto-save every 30s
@@ -1084,8 +1123,10 @@ angular.module('attemptExamApp', ['ngCookies'])
                 if(response.data.data.submitted) { //The exam got submitted
                     renderExamCompleteScreen(response.data.data.reportURL);
                 }
+            } else if((response.data.status == "failed" || response.data.status == "error") && response.data.message == "Exam has already ended") {
+                renderExamCompleteScreen();
             } else {
-                console.log('failed to save');
+                location.reload(); //Save failed (reload)
             }
         });
     }
